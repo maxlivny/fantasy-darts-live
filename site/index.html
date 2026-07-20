@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fantasy Darts Live</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">LIVE RESULTS</div>
+      <h1 id="title">Fantasy Darts</h1>
+      <div class="meta">
+        <span id="updated">Загрузка…</span>
+        <span id="matchCount"></span>
+      </div>
+    </div>
+    <button id="refreshButton">Обновить</button>
+  </header>
+
+  <main>
+    <section class="controls">
+      <input id="search" type="search" placeholder="Найти участника">
+      <button class="tab active" data-view="standings">Таблица</button>
+      <button class="tab" data-view="matches">Последние матчи</button>
+    </section>
+
+    <section id="standingsView">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Место</th>
+              <th>Участник</th>
+              <th>Итого</th>
+              <th>В игре</th>
+              <th>Стоимость</th>
+            </tr>
+          </thead>
+          <tbody id="standings"></tbody>
+        </table>
+      </div>
+      <div id="empty" class="empty hidden">Участники не найдены.</div>
+    </section>
+
+    <section id="matchesView" class="hidden">
+      <div id="matches" class="match-list"></div>
+    </section>
+  </main>
+
+  <template id="participantTemplate">
+    <tr class="details-row">
+      <td colspan="5">
+        <div class="roster"></div>
+      </td>
+    </tr>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
