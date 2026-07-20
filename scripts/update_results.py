@@ -159,12 +159,44 @@ def fetch_matches(url: str, players: dict[str, str]) -> list[dict[str, Any]]:
     return parse_tables(response.text, players)
 
 
-def round_score(stage_scores: dict[str, Any], wins: int) -> int:
-    converted = {int(k): int(v) for k, v in stage_scores.items()}
+def normalize_stage_scores(stage_scores: Any) -> dict[int, int]:
+    """
+    Поддерживает оба формата из Fantasy Darts Counter:
+
+    1) Словарь:
+       {"1": 0, "2": 3, "3": 6}
+
+    2) Список:
+       [0, 3, 6, 10, 14, 18]
+
+    Для списка первый элемент считается очками за 1-й раунд.
+    """
+    converted: dict[int, int] = {}
+
+    if isinstance(stage_scores, dict):
+        for key, value in stage_scores.items():
+            try:
+                converted[int(key)] = int(value)
+            except (TypeError, ValueError):
+                continue
+        return converted
+
+    if isinstance(stage_scores, list):
+        for index, value in enumerate(stage_scores, start=1):
+            try:
+                converted[index] = int(value)
+            except (TypeError, ValueError):
+                continue
+        return converted
+
+    return converted
+
+
+def round_score(stage_scores: Any, wins: int) -> int:
+    converted = normalize_stage_scores(stage_scores)
     if not converted:
         return 0
 
-    # В проекте ключ обычно означает достигнутый раунд.
     # После одной победы игрок достигает второго раунда.
     achieved_round = wins + 1
     eligible = [key for key in converted if key <= achieved_round]
