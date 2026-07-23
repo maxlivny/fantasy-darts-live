@@ -17,6 +17,7 @@ PROJECT_PATH = ROOT / "data" / "project.json"
 OUTPUT_PATH = ROOT / "site" / "data.json"
 
 SCORE_RE = re.compile(r"(?<!\d)(\d{1,2})\s*[–—−-]\s*(\d{1,2})(?!\d)")
+WALKOVER_RE = re.compile(r"(?:\bw\s*/?\s*o\b|\bwalkover\b|\bwithdrawn\b|\bwithdrew\b|\bretired\b|\babandoned\b)", re.I)
 
 
 def normalize_name(value: str) -> str:
@@ -104,13 +105,18 @@ def parse_tables(html: str, players: dict[str, str]) -> list[dict[str, Any]]:
 
             score_index = None
             score_pair = None
+            is_walkover = False
             for i, text in enumerate(texts):
                 found = SCORE_RE.search(text)
                 if found:
                     score_index = i
                     score_pair = (int(found.group(1)), int(found.group(2)))
                     break
-            if score_index is None or score_pair is None:
+                if WALKOVER_RE.search(text):
+                    score_index = i
+                    is_walkover = True
+                    break
+            if score_index is None:
                 continue
 
             left_candidates = [
@@ -124,15 +130,22 @@ def parse_tables(html: str, players: dict[str, str]) -> list[dict[str, Any]]:
             if not left or not right or left == right:
                 continue
 
-            s1, s2 = score_pair
-            if s1 == s2:
-                continue
-            if s1 > s2:
-                winner, loser = left, right
-                score = f"{s1}-{s2}"
-            else:
+            if is_walkover:
+                # В таблице Schedule Wikipedia запись идёт как
+                # Player 1 | w/o | Player 2, когда Player 1 снялся,
+                # а Player 2 получил техническую победу.
                 winner, loser = right, left
-                score = f"{s2}-{s1}"
+                score = "w/o"
+            else:
+                s1, s2 = score_pair
+                if s1 == s2:
+                    continue
+                if s1 > s2:
+                    winner, loser = left, right
+                    score = f"{s1}-{s2}"
+                else:
+                    winner, loser = right, left
+                    score = f"{s2}-{s1}"
 
             key = (round_no, normalize_name(winner), normalize_name(loser))
             if key in seen:
