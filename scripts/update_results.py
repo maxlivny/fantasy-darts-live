@@ -91,6 +91,15 @@ def parse_tables(html: str, players: dict[str, str]) -> list[dict[str, Any]]:
     seen = set()
 
     for table in soup.select("table"):
+         table_text = normalize_name(table.get_text(" ", strip=True))
+
+        if not (
+            "match #" in table_text
+            and "player 1" in table_text
+            and "score" in table_text
+            and "player 2" in table_text
+        ):
+            continue
         rows = table.select("tr")
         current_round = infer_round(table.get_text(" ", strip=True))
 
