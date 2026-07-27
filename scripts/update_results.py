@@ -3,10 +3,12 @@ from __future__ import annotations
 import json
 import re
 import sys
+import time
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -279,12 +281,10 @@ def wikipedia_page_title(url: str) -> str:
     match = re.search(r"/wiki/([^?#]+)", str(url))
     if not match:
         raise ValueError("Не удалось определить название страницы Wikipedia.")
-
-    from urllib.parse import unquote
     return unquote(match.group(1)).replace("_", " ")
 
 
-def fetch_matches(
+def fetch_wikipedia_matches(
     url: str,
     players: dict[str, str],
     winning_legs_by_round: dict[int, int],
@@ -323,6 +323,206 @@ def fetch_matches(
         )
 
     return matches
+
+
+
+def dartconnect_event_slug(url: str) -> str:
+    match = re.search(r"/(?:api/)?event/([^/?#]+)", str(url), flags=re.I)
+    if not match:
+        raise ValueError(
+            "Не удалось определить код турнира DartConnect. "
+            "Нужна ссылка вида https://tv.dartconnect.com/event/.../matches"
+        )
+    return match.group(1)
+
+
+def dartconnect_score(value: Any) -> int | None:
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, int):
+        return value
+    text = str(value).strip()
+    return int(text) if re.fullmatch(r"\d{1,2}", text) else None
+
+
+def clean_dartconnect_name(value: Any, players: dict[str, str]) -> str | None:
+    if isinstance(value, dict):
+        for key in ("fullName", "displayName", "name", "playerName", "hcf", "acf", "ch", "ac"):
+            if value.get(key):
+                value = value[key]
+                break
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not text:
+        return None
+    if "," in text:
+        surname, given = text.split(",", 1)
+        text = f"{given.strip()} {surname.strip()}"
+    return resolve_player(text, players)
+
+
+def dartconnect_round(value: Any, rounds_count: int) -> int | None:
+    text = normalize_name(str(value or ""))
+    if not text:
+        return None
+    if "final" in text and "semi" not in text:
+        return rounds_count
+    if "semi" in text:
+        return max(1, rounds_count - 1)
+    if "quarter" in text or "last 8" in text:
+        return max(1, rounds_count - 2)
+    m = re.search(r"(?:last|round of|r)\s*(128|64|32|16|8|4|2|1)\b", text)
+    if m:
+        field = int(m.group(1))
+        import math
+        return max(1, min(rounds_count, rounds_count - int(math.log2(field)) + 1))
+    m = re.fullmatch(r"\D*(\d+)\D*", text)
+    if m:
+        number = int(m.group(1))
+        if 1 <= number <= rounds_count:
+            return number
+        if number in (128, 64, 32, 16, 8, 4, 2):
+            import math
+            return max(1, min(rounds_count, rounds_count - int(math.log2(number)) + 1))
+    return None
+
+
+def parse_dartconnect_api(
+    data: Any,
+    players: dict[str, str],
+    rounds_count: int,
+) -> list[dict[str, Any]]:
+    if not isinstance(data, dict):
+        return []
+    payload = data.get("payload", data)
+    if not isinstance(payload, dict):
+        return []
+    completed = payload.get("completed", [])
+    if not isinstance(completed, list):
+        return []
+
+    def first_value(obj: dict[str, Any], keys: tuple[str, ...]) -> Any:
+        for key in keys:
+            value = obj.get(key)
+            if value not in (None, "", []):
+                return value
+        return None
+
+    matches: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for item in completed:
+        if not isinstance(item, dict):
+            continue
+        home = clean_dartconnect_name(first_value(item, (
+            "hcf", "ch", "homeFullName", "home_name", "homePlayer", "home", "player1"
+        )), players)
+        away = clean_dartconnect_name(first_value(item, (
+            "acf", "ac", "awayFullName", "away_name", "awayPlayer", "away", "player2"
+        )), players)
+        if not home or not away or home == away:
+            continue
+        hs = dartconnect_score(first_value(item, ("hs", "homeScore", "score1", "homelegs", "homeLegs")))
+        ass = dartconnect_score(first_value(item, ("as", "awayScore", "score2", "awaylegs", "awayLegs")))
+        if hs is None or ass is None:
+            m = SCORE_RE.search(str(item.get("ms", "")))
+            if m:
+                hs, ass = int(m.group(1)), int(m.group(2))
+        if hs is None or ass is None or hs == ass:
+            continue
+        winner, loser = (home, away) if hs > ass else (away, home)
+        ws, ls = max(hs, ass), min(hs, ass)
+        round_no = dartconnect_round(first_value(item, ("r", "round", "roundCode", "stage")), rounds_count)
+        row = {"winner": winner, "loser": loser, "score": f"{ws}-{ls}"}
+        if round_no is not None:
+            row["round"] = round_no
+        key = (winner, loser, row["score"])
+        if key not in seen:
+            seen.add(key)
+            matches.append(row)
+    return matches
+
+
+def fetch_dartconnect_matches(
+    url: str,
+    players: dict[str, str],
+    rounds_count: int,
+) -> list[dict[str, Any]]:
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as exc:
+        raise RuntimeError("Для DartConnect нужен пакет playwright.") from exc
+
+    slug = dartconnect_event_slug(url)
+    event_url = f"https://tv.dartconnect.com/event/{slug}/matches"
+    api_url = f"https://tv.dartconnect.com/api/event/{slug}/matches"
+    captured: dict[str, Any] = {"data": None, "status": None}
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(
+            headless=True,
+            args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
+        )
+        context = browser.new_context(
+            viewport={"width": 1400, "height": 900},
+            locale="en-US",
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            ),
+        )
+        page = context.new_page()
+
+        def on_response(response: Any) -> None:
+            if "/api/event/" not in response.url or "/matches" not in response.url:
+                return
+            try:
+                captured["status"] = response.status
+                if response.status == 200:
+                    captured["data"] = response.json()
+            except Exception:
+                pass
+
+        page.on("response", on_response)
+        page.goto(event_url, wait_until="domcontentloaded", timeout=90000)
+        deadline = time.time() + 45
+        while captured["data"] is None and time.time() < deadline:
+            page.wait_for_timeout(500)
+
+        if captured["data"] is None:
+            result = page.evaluate(
+                """async (apiUrl) => {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST', credentials: 'include',
+                        headers: {'accept':'application/json, text/plain, */*', 'x-requested-with':'XMLHttpRequest'}
+                    });
+                    return {status: response.status, text: await response.text()};
+                }""",
+                api_url,
+            )
+            captured["status"] = result.get("status")
+            if captured["status"] == 200:
+                captured["data"] = json.loads(result.get("text") or "{}")
+        browser.close()
+
+    if captured["data"] is None:
+        raise RuntimeError(f"DartConnect не вернул JSON матчей (HTTP {captured['status']}).")
+    matches = parse_dartconnect_api(captured["data"], players, rounds_count)
+    # До старта или между матчами пустой completed допустим.
+    return matches
+
+
+def fetch_matches(
+    config: dict[str, Any],
+    players: dict[str, str],
+    winning_legs_by_round: dict[int, int],
+    rounds_count: int,
+) -> list[dict[str, Any]]:
+    source = str(config.get("result_source", "wikipedia")).strip().casefold()
+    url = str(config.get("tournament_url", "")).strip()
+    if source == "dartconnect":
+        return fetch_dartconnect_matches(url, players, rounds_count)
+    if source == "wikipedia":
+        return fetch_wikipedia_matches(url, players, winning_legs_by_round, rounds_count)
+    raise ValueError(f"Неизвестный источник результатов: {source}")
 
 def normalize_stage_scores(stage_scores: Any) -> dict[int, int]:
     """
@@ -502,7 +702,7 @@ def main() -> int:
 
     matches = (
         fetch_matches(
-            config["tournament_url"],
+            config,
             players,
             winning_legs_by_round,
             rounds_count,

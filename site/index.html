@@ -9,43 +9,65 @@
 <body>
   <header class="topbar">
     <div>
-      <div class="eyebrow">LIVE RESULTS</div>
+      <div class="eyebrow" id="modeLabel">LIVE RESULTS</div>
       <h1 id="title">Fantasy Darts</h1>
       <div class="meta">
         <span id="updated">Загрузка…</span>
         <span id="matchCount"></span>
       </div>
     </div>
-    <button id="refreshButton">Обновить</button>
+    <div class="header-actions">
+      <button id="currentButton" class="nav-button active">Текущий турнир</button>
+      <button id="archiveButton" class="nav-button">Архив</button>
+      <button id="refreshButton">Обновить</button>
+    </div>
   </header>
 
   <main>
-    <section class="controls">
-      <input id="search" type="search" placeholder="Найти участника">
-      <button class="tab active" data-view="standings">Таблица</button>
-      <button class="tab" data-view="matches">Последние матчи</button>
-    </section>
+    <section id="tournamentSection">
+      <section class="controls">
+        <input id="search" type="search" placeholder="Найти участника">
+        <button class="tab active" data-view="standings">Таблица</button>
+        <button class="tab" data-view="matches">Последние матчи</button>
+      </section>
 
-    <section id="standingsView">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Место</th>
-              <th>Участник</th>
-              <th>Итого</th>
-              <th>В игре</th>
-              <th>Стоимость</th>
-            </tr>
-          </thead>
-          <tbody id="standings"></tbody>
-        </table>
+      <div id="archiveNotice" class="archive-notice hidden">
+        <span>Вы просматриваете завершённый турнир.</span>
+        <button id="backToArchiveButton">Вернуться к архиву</button>
       </div>
-      <div id="empty" class="empty hidden">Участники не найдены.</div>
+
+      <section id="standingsView">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Место</th>
+                <th>Участник</th>
+                <th>Итого</th>
+                <th>В игре</th>
+                <th>Стоимость</th>
+              </tr>
+            </thead>
+            <tbody id="standings"></tbody>
+          </table>
+        </div>
+        <div id="empty" class="empty hidden">Участники не найдены.</div>
+      </section>
+
+      <section id="matchesView" class="hidden">
+        <div id="matches" class="match-list"></div>
+      </section>
     </section>
 
-    <section id="matchesView" class="hidden">
-      <div id="matches" class="match-list"></div>
+    <section id="archiveSection" class="hidden">
+      <div class="archive-heading">
+        <div>
+          <div class="eyebrow">ЗАВЕРШЁННЫЕ ТУРНИРЫ</div>
+          <h2>Архив</h2>
+        </div>
+      </div>
+      <div id="archiveList" class="archive-list"></div>
+      <div id="archiveEmpty" class="empty hidden">В архиве пока нет турниров.</div>
     </section>
   </main>
 
