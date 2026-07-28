@@ -441,9 +441,194 @@ def parse_dartconnect_api(
     return matches
 
 
+def dartconnect_round_from_heading(value: str, rounds_count: int) -> int | None:
+    text = normalize_name(value)
+    labels = {
+        128: 1,
+        64: 2,
+        32: 3,
+        16: 4,
+        8: 5,
+        4: 6,
+        2: 7,
+    }
+    if "final" in text and "semi" not in text:
+        return rounds_count
+    if "semi" in text:
+        return max(1, rounds_count - 1)
+    if "quarter" in text:
+        return max(1, rounds_count - 2)
+    match = re.search(r"(?:top|last|round of)\s*(128|64|32|16|8|4|2)\b", text)
+    if match:
+        field = int(match.group(1))
+        return min(rounds_count, labels.get(field, 1))
+    return None
+
+
+def dartconnect_player_occurrences(line: str, players: dict[str, str]) -> list[tuple[int, int, str]]:
+    normalized_line = normalize_name(line)
+    found: list[tuple[int, int, str]] = []
+    for canonical in players.values():
+        aliases = [canonical]
+        parts = canonical.split()
+        if len(parts) >= 2:
+            aliases.append(f"{' '.join(parts[1:])}, {parts[0]}")
+        best = None
+        for alias in aliases:
+            key = normalize_name(alias)
+            pos = normalized_line.find(key)
+            if pos >= 0 and (best is None or len(key) > best[1] - best[0]):
+                best = (pos, pos + len(key), canonical)
+        if best:
+            found.append(best)
+    # Удаляем вложенные/дублирующиеся совпадения, предпочитая более длинные.
+    found.sort(key=lambda item: (item[0], -(item[1] - item[0])))
+    result: list[tuple[int, int, str]] = []
+    for item in found:
+        if any(item[0] >= x[0] and item[1] <= x[1] for x in result):
+            continue
+        result.append(item)
+    return sorted(result)
+
+
+def parse_dartconnect_rendered_text(
+    text: str,
+    players: dict[str, str],
+    winning_legs_by_round: dict[int, int],
+    rounds_count: int,
+) -> list[dict[str, Any]]:
+    matches: list[dict[str, Any]] = []
+    seen: set[tuple[int, str, str]] = set()
+    current_round: int | None = None
+
+    for raw_line in str(text or "").splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip()
+        if not line:
+            continue
+
+        heading_round = dartconnect_round_from_heading(line, rounds_count)
+        if heading_round is not None and not SCORE_RE.search(line):
+            current_round = heading_round
+            continue
+
+        score_match = SCORE_RE.search(line)
+        if not score_match:
+            continue
+
+        score1, score2 = int(score_match.group(1)), int(score_match.group(2))
+        occurrences = dartconnect_player_occurrences(line, players)
+        if len(occurrences) < 2:
+            continue
+
+        score_pos = score_match.start()
+        left = [item for item in occurrences if item[1] <= score_pos]
+        right = [item for item in occurrences if item[0] >= score_match.end()]
+        if not left or not right:
+            continue
+
+        player1 = max(left, key=lambda item: item[1])[2]
+        player2 = min(right, key=lambda item: item[0])[2]
+        if player1 == player2:
+            continue
+
+        round_no = current_round
+        if round_no is None:
+            # Для ранних строк без заголовка допускаем только первый раунд.
+            round_no = 1
+
+        required = winning_legs_by_round.get(round_no)
+        if not is_completed_numeric_score(score1, score2, required):
+            continue
+
+        if score1 > score2:
+            winner, loser = player1, player2
+            display_score = f"{score1}-{score2}"
+        else:
+            winner, loser = player2, player1
+            display_score = f"{score2}-{score1}"
+
+        key = (round_no, normalize_name(winner), normalize_name(loser))
+        if key in seen:
+            continue
+        seen.add(key)
+        matches.append({
+            "winner": winner,
+            "loser": loser,
+            "score": display_score,
+            "round": round_no,
+        })
+
+    return matches
+
+
+def canonicalize_dartconnect_display_name(value: str, players: dict[str, str]) -> str | None:
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    text = re.sub(r"^\(\d+\)\s*", "", text)
+    text = re.sub(r"\s*\(\d+\)$", "", text)
+    if not text or re.fullmatch(r"B\d+", text, flags=re.I):
+        return None
+    if "," in text:
+        surname, given = text.split(",", 1)
+        text = f"{given.strip()} {surname.strip()}"
+    return resolve_player(text, players) or clean_name(text)
+
+
+def parse_dartconnect_dom_rows(
+    rows: list[dict[str, Any]],
+    players: dict[str, str],
+    winning_legs_by_round: dict[int, int],
+    rounds_count: int,
+) -> list[dict[str, Any]]:
+    matches: list[dict[str, Any]] = []
+    seen: set[tuple[int, str, str]] = set()
+
+    for row in rows:
+        line = re.sub(r"\s+", " ", str(row.get("text", ""))).strip()
+        score_match = SCORE_RE.search(line)
+        if not score_match:
+            continue
+        score1, score2 = int(score_match.group(1)), int(score_match.group(2))
+
+        raw_names = row.get("players", [])
+        names: list[str] = []
+        if isinstance(raw_names, list):
+            for value in raw_names:
+                name = canonicalize_dartconnect_display_name(str(value), players)
+                if name and normalize_name(name) not in {normalize_name(x) for x in names}:
+                    names.append(name)
+        if len(names) < 2:
+            occurrences = dartconnect_player_occurrences(line, players)
+            score_pos = score_match.start()
+            left = [item for item in occurrences if item[1] <= score_pos]
+            right = [item for item in occurrences if item[0] >= score_match.end()]
+            if not left or not right:
+                continue
+            names = [max(left, key=lambda item: item[1])[2], min(right, key=lambda item: item[0])[2]]
+
+        player1, player2 = names[0], names[1]
+        if player1 == player2:
+            continue
+
+        round_no = dartconnect_round_from_heading(str(row.get("heading", "")), rounds_count) or 1
+        required = winning_legs_by_round.get(round_no)
+        if not is_completed_numeric_score(score1, score2, required):
+            continue
+
+        winner, loser = (player1, player2) if score1 > score2 else (player2, player1)
+        ws, ls = max(score1, score2), min(score1, score2)
+        key = (round_no, normalize_name(winner), normalize_name(loser))
+        if key in seen:
+            continue
+        seen.add(key)
+        matches.append({"winner": winner, "loser": loser, "score": f"{ws}-{ls}", "round": round_no})
+    return matches
+
+
+
 def fetch_dartconnect_matches(
     url: str,
     players: dict[str, str],
+    winning_legs_by_round: dict[int, int],
     rounds_count: int,
 ) -> list[dict[str, Any]]:
     try:
@@ -453,8 +638,6 @@ def fetch_dartconnect_matches(
 
     slug = dartconnect_event_slug(url)
     event_url = f"https://tv.dartconnect.com/event/{slug}/matches"
-    api_url = f"https://tv.dartconnect.com/api/event/{slug}/matches"
-    captured: dict[str, Any] = {"data": None, "status": None}
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
@@ -462,7 +645,7 @@ def fetch_dartconnect_matches(
             args=["--disable-blink-features=AutomationControlled", "--no-sandbox"],
         )
         context = browser.new_context(
-            viewport={"width": 1400, "height": 900},
+            viewport={"width": 1440, "height": 1800},
             locale="en-US",
             user_agent=(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -470,45 +653,63 @@ def fetch_dartconnect_matches(
             ),
         )
         page = context.new_page()
-
-        def on_response(response: Any) -> None:
-            if "/api/event/" not in response.url or "/matches" not in response.url:
-                return
-            try:
-                captured["status"] = response.status
-                if response.status == 200:
-                    captured["data"] = response.json()
-            except Exception:
-                pass
-
-        page.on("response", on_response)
         page.goto(event_url, wait_until="domcontentloaded", timeout=90000)
-        deadline = time.time() + 45
-        while captured["data"] is None and time.time() < deadline:
-            page.wait_for_timeout(500)
 
-        if captured["data"] is None:
-            result = page.evaluate(
-                """async (apiUrl) => {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST', credentials: 'include',
-                        headers: {'accept':'application/json, text/plain, */*', 'x-requested-with':'XMLHttpRequest'}
+        # Ждём, пока Vue отрисует строки матчей.
+        deadline = time.time() + 60
+        while time.time() < deadline:
+            body_text = page.locator("body").inner_text(timeout=5000)
+            if SCORE_RE.search(body_text):
+                break
+            page.wait_for_timeout(1000)
+        page.wait_for_timeout(2500)
+
+        dom_rows = page.evaluate(
+            r"""() => {
+                const scoreRe = /(?:^|\s)(\d{1,2})\s*[–—−-]\s*(\d{1,2})(?:\s|$)/;
+                const headingRe = /^(Top|Last|Round of)\s*(128|64|32|16|8|4|2)$|^(Quarter.?finals?|Semi.?finals?|Final)$/i;
+                const all = Array.from(document.querySelectorAll('body *'));
+                const headings = all.filter(el => headingRe.test((el.innerText || '').trim()));
+                const candidates = all.filter(el => {
+                    const text = (el.innerText || '').replace(/\s+/g, ' ').trim();
+                    if (!scoreRe.test(text)) return false;
+                    // Строка матча — небольшой контейнер; большие секции содержат много счетов.
+                    const scores = text.match(/\d{1,2}\s*[–—−-]\s*\d{1,2}/g) || [];
+                    return scores.length === 1 && text.length < 350;
+                });
+                const rows = [];
+                for (const el of candidates) {
+                    // Оставляем самый маленький контейнер с этим же полным текстом.
+                    const childSame = Array.from(el.children).some(ch => {
+                        const t = (ch.innerText || '').replace(/\s+/g, ' ').trim();
+                        return scoreRe.test(t) && t.length < 350;
                     });
-                    return {status: response.status, text: await response.text()};
-                }""",
-                api_url,
-            )
-            captured["status"] = result.get("status")
-            if captured["status"] == 200:
-                captured["data"] = json.loads(result.get("text") or "{}")
+                    if (childSame) continue;
+                    let heading = '';
+                    for (const h of headings) {
+                        if (h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                            heading = (h.innerText || '').trim();
+                        }
+                    }
+                    const playerNames = Array.from(el.querySelectorAll('span'))
+                        .map(sp => (sp.innerText || '').replace(/\s+/g, ' ').trim())
+                        .filter(t => t.includes(',') && /[A-Za-zÀ-ž]/.test(t));
+                    rows.push({text: (el.innerText || '').replace(/\s+/g, ' ').trim(), heading, players: playerNames});
+                }
+                return rows;
+            }"""
+        )
         browser.close()
 
-    if captured["data"] is None:
-        raise RuntimeError(f"DartConnect не вернул JSON матчей (HTTP {captured['status']}).")
-    matches = parse_dartconnect_api(captured["data"], players, rounds_count)
-    # До старта или между матчами пустой completed допустим.
+    matches = parse_dartconnect_dom_rows(
+        dom_rows, players, winning_legs_by_round, rounds_count
+    )
+    if not matches and dom_rows:
+        raise RuntimeError(
+            "DartConnect открылся, но завершённые матчи не удалось сопоставить "
+            "с игроками проекта."
+        )
     return matches
-
 
 def fetch_matches(
     config: dict[str, Any],
@@ -519,7 +720,7 @@ def fetch_matches(
     source = str(config.get("result_source", "wikipedia")).strip().casefold()
     url = str(config.get("tournament_url", "")).strip()
     if source == "dartconnect":
-        return fetch_dartconnect_matches(url, players, rounds_count)
+        return fetch_dartconnect_matches(url, players, winning_legs_by_round, rounds_count)
     if source == "wikipedia":
         return fetch_wikipedia_matches(url, players, winning_legs_by_round, rounds_count)
     raise ValueError(f"Неизвестный источник результатов: {source}")
