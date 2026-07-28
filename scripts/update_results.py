@@ -573,6 +573,33 @@ def canonicalize_dartconnect_display_name(value: str, players: dict[str, str]) -
     return resolve_player(text, players) or clean_name(text)
 
 
+def clean_dartconnect_player_segment(value: str) -> str:
+    """Удаляет номер доски, среднее и номер посева из половины строки матча."""
+    text = re.sub(r"\s+", " ", str(value or "")).strip()
+    text = re.sub(r"^B\d+\b\s*", "", text, flags=re.I)
+    text = re.sub(r"\(\s*\d+\s*\)", " ", text)
+    # Среднее DartConnect всегда выводится как десятичное число (например 94.55).
+    text = re.sub(r"(?<![\w.])\d{1,3}[.,]\d{1,2}(?![\w.])", " ", text)
+    text = re.sub(r"\s+", " ", text).strip(" \t\r\n–—-:")
+    return text
+
+
+def extract_dartconnect_players_around_score(
+    line: str,
+    score_match: re.Match[str],
+    players: dict[str, str],
+) -> list[str]:
+    """Берёт игроков слева и справа от счёта независимо от посева и средних."""
+    left_raw = clean_dartconnect_player_segment(line[: score_match.start()])
+    right_raw = clean_dartconnect_player_segment(line[score_match.end() :])
+
+    left = canonicalize_dartconnect_display_name(left_raw, players)
+    right = canonicalize_dartconnect_display_name(right_raw, players)
+    if not left or not right or normalize_name(left) == normalize_name(right):
+        return []
+    return [left, right]
+
+
 def extract_known_players_from_line(line: str, players: dict[str, str]) -> list[str]:
     """Извлекает двух игроков из полного текста строки DartConnect.
 
@@ -650,6 +677,11 @@ def parse_dartconnect_dom_rows(
                         names.append(canonical)
                 elif display:
                     unmatched.add(display)
+
+        if len(names) != 2:
+            score_match = SCORE_RE.search(line)
+            if score_match:
+                names = extract_dartconnect_players_around_score(line, score_match, players)
 
         if len(names) != 2:
             names = extract_known_players_from_line(line, players)
