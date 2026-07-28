@@ -581,35 +581,50 @@ def parse_dartconnect_dom_rows(
 ) -> list[dict[str, Any]]:
     matches: list[dict[str, Any]] = []
     seen: set[tuple[int, str, str]] = set()
+    unmatched: set[str] = set()
 
     for row in rows:
+        raw_score = row.get("score")
+        score1: int | None = None
+        score2: int | None = None
+        if isinstance(raw_score, list) and len(raw_score) >= 2:
+            try:
+                score1, score2 = int(raw_score[0]), int(raw_score[1])
+            except (TypeError, ValueError):
+                score1 = score2 = None
+
         line = re.sub(r"\s+", " ", str(row.get("text", ""))).strip()
-        score_match = SCORE_RE.search(line)
-        if not score_match:
-            continue
-        score1, score2 = int(score_match.group(1)), int(score_match.group(2))
+        if score1 is None or score2 is None:
+            score_match = SCORE_RE.search(line)
+            if not score_match:
+                continue
+            score1, score2 = int(score_match.group(1)), int(score_match.group(2))
 
         raw_names = row.get("players", [])
         names: list[str] = []
         if isinstance(raw_names, list):
             for value in raw_names:
-                name = canonicalize_dartconnect_display_name(str(value), players)
-                if name and normalize_name(name) not in {normalize_name(x) for x in names}:
-                    names.append(name)
-        if len(names) < 2:
-            occurrences = dartconnect_player_occurrences(line, players)
-            score_pos = score_match.start()
-            left = [item for item in occurrences if item[1] <= score_pos]
-            right = [item for item in occurrences if item[0] >= score_match.end()]
-            if not left or not right:
-                continue
-            names = [max(left, key=lambda item: item[1])[2], min(right, key=lambda item: item[0])[2]]
+                display = re.sub(r"\s+", " ", str(value or "")).strip()
+                name = canonicalize_dartconnect_display_name(display, players)
+                if name and normalize_name(name) in players:
+                    canonical = players[normalize_name(name)]
+                    if normalize_name(canonical) not in {normalize_name(x) for x in names}:
+                        names.append(canonical)
+                elif display:
+                    unmatched.add(display)
 
-        player1, player2 = names[0], names[1]
+        if len(names) != 2:
+            continue
+
+        player1, player2 = names
         if player1 == player2:
             continue
 
-        round_no = dartconnect_round_from_heading(str(row.get("heading", "")), rounds_count) or 1
+        round_no = dartconnect_round_from_heading(str(row.get("heading", "")), rounds_count)
+        if round_no is None:
+            # Для Players Championship первая показанная секция обычно Top 128.
+            round_no = 1
+
         required = winning_legs_by_round.get(round_no)
         if not is_completed_numeric_score(score1, score2, required):
             continue
@@ -620,9 +635,19 @@ def parse_dartconnect_dom_rows(
         if key in seen:
             continue
         seen.add(key)
-        matches.append({"winner": winner, "loser": loser, "score": f"{ws}-{ls}", "round": round_no})
-    return matches
+        matches.append({
+            "winner": winner,
+            "loser": loser,
+            "score": f"{ws}-{ls}",
+            "round": round_no,
+        })
 
+    if unmatched:
+        print(
+            "DartConnect: не сопоставлены имена: " + ", ".join(sorted(unmatched)),
+            file=sys.stderr,
+        )
+    return matches
 
 
 def fetch_dartconnect_matches(
@@ -655,61 +680,71 @@ def fetch_dartconnect_matches(
         page = context.new_page()
         page.goto(event_url, wait_until="domcontentloaded", timeout=90000)
 
-        # Ждём, пока Vue отрисует строки матчей.
-        deadline = time.time() + 60
-        while time.time() < deadline:
-            body_text = page.locator("body").inner_text(timeout=5000)
-            if SCORE_RE.search(body_text):
-                break
-            page.wait_for_timeout(1000)
-        page.wait_for_timeout(2500)
+        # Ждём именно строки DartConnect, а не любой случайный счёт в рекламе.
+        try:
+            page.wait_for_selector('[recap-url][tournament-id]', timeout=60000)
+        except Exception:
+            pass
+        page.wait_for_timeout(3000)
 
         dom_rows = page.evaluate(
             r"""() => {
-                const scoreRe = /(?:^|\s)(\d{1,2})\s*[–—−-]\s*(\d{1,2})(?:\s|$)/;
                 const headingRe = /^(Top|Last|Round of)\s*(128|64|32|16|8|4|2)$|^(Quarter.?finals?|Semi.?finals?|Final)$/i;
-                const all = Array.from(document.querySelectorAll('body *'));
-                const headings = all.filter(el => headingRe.test((el.innerText || '').trim()));
-                const candidates = all.filter(el => {
-                    const text = (el.innerText || '').replace(/\s+/g, ' ').trim();
-                    if (!scoreRe.test(text)) return false;
-                    // Строка матча — небольшой контейнер; большие секции содержат много счетов.
-                    const scores = text.match(/\d{1,2}\s*[–—−-]\s*\d{1,2}/g) || [];
-                    return scores.length === 1 && text.length < 350;
-                });
+                const headings = Array.from(document.querySelectorAll('body *'))
+                    .filter(el => headingRe.test((el.innerText || '').replace(/\s+/g, ' ').trim()));
+
                 const rows = [];
-                for (const el of candidates) {
-                    // Оставляем самый маленький контейнер с этим же полным текстом.
-                    const childSame = Array.from(el.children).some(ch => {
-                        const t = (ch.innerText || '').replace(/\s+/g, ' ').trim();
-                        return scoreRe.test(t) && t.length < 350;
-                    });
-                    if (childSame) continue;
+                for (const el of document.querySelectorAll('[recap-url][tournament-id]')) {
+                    const playerNames = Array.from(el.querySelectorAll('span.truncate.leading-tight'))
+                        .map(sp => (sp.innerText || '').replace(/\s+/g, ' ').trim())
+                        .filter(Boolean);
+
+                    // Центральный desktop-блок счёта: два отдельных span.
+                    let score = Array.from(el.querySelectorAll('div.mx-2.hidden.w-14 span'))
+                        .map(sp => (sp.innerText || '').trim())
+                        .filter(t => /^\d{1,2}$/.test(t))
+                        .slice(0, 2)
+                        .map(Number);
+
+                    if (score.length !== 2) {
+                        const text = (el.innerText || '').replace(/\s+/g, ' ').trim();
+                        const m = text.match(/(?:^|\s)(\d{1,2})\s*[–—−-]\s*(\d{1,2})(?:\s|$)/);
+                        score = m ? [Number(m[1]), Number(m[2])] : [];
+                    }
+
                     let heading = '';
                     for (const h of headings) {
                         if (h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) {
-                            heading = (h.innerText || '').trim();
+                            heading = (h.innerText || '').replace(/\s+/g, ' ').trim();
                         }
                     }
-                    const playerNames = Array.from(el.querySelectorAll('span'))
-                        .map(sp => (sp.innerText || '').replace(/\s+/g, ' ').trim())
-                        .filter(t => t.includes(',') && /[A-Za-zÀ-ž]/.test(t));
-                    rows.push({text: (el.innerText || '').replace(/\s+/g, ' ').trim(), heading, players: playerNames});
+
+                    rows.push({
+                        text: (el.innerText || '').replace(/\s+/g, ' ').trim(),
+                        heading,
+                        players: playerNames,
+                        score,
+                    });
                 }
                 return rows;
             }"""
         )
         browser.close()
 
+    # Подробная диагностика остаётся в Actions-логе.
+    print(f"DartConnect: DOM-строк найдено {len(dom_rows)}.")
     matches = parse_dartconnect_dom_rows(
         dom_rows, players, winning_legs_by_round, rounds_count
     )
+    print(f"DartConnect: завершённых матчей принято {len(matches)}.")
+
     if not matches and dom_rows:
         raise RuntimeError(
             "DartConnect открылся, но завершённые матчи не удалось сопоставить "
-            "с игроками проекта."
+            "с игроками проекта. Смотрите строки диагностики выше."
         )
     return matches
+
 
 def fetch_matches(
     config: dict[str, Any],
