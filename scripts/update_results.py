@@ -26,6 +26,9 @@ def normalize_name(value: str) -> str:
     value = unicodedata.normalize("NFKC", str(value or ""))
     # Wikipedia часто хранит реальные диакритические знаки в фамилиях,
     # а project.json — ASCII-варианты: Engström/Engstrom, Sedláček/Sedlacek.
+    # Characters such as Polish ł/Ł do not decompose to l/L under NFKD,
+    # so transliterate them explicitly before removing combining marks.
+    value = value.translate(str.maketrans({"ł": "l", "Ł": "L"}))
     value = unicodedata.normalize("NFKD", value)
     value = "".join(ch for ch in value if not unicodedata.combining(ch))
     value = value.replace("’", "'").replace("`", "'")
