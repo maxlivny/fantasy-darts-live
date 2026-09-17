@@ -1,0 +1,115 @@
+name: Start new tournament
+
+on:
+  workflow_dispatch:
+    inputs:
+      csv_path:
+        description: "CSV path in repo (example: incoming/tournament.csv)"
+        required: true
+        default: "incoming/tournament.csv"
+      tournament_name:
+        description: "Tournament name (leave blank to read it from CSV)"
+        required: false
+        default: ""
+      source_url:
+        description: "Wikipedia or DartConnect URL"
+        required: true
+      source_type:
+        description: "Results source"
+        required: true
+        type: choice
+        options:
+          - wikipedia
+          - dartconnect
+        default: wikipedia
+      budget:
+        description: "Budget (leave blank to read it from CSV)"
+        required: false
+        default: ""
+      start_stage:
+        description: "Start stage"
+        required: true
+        default: "1/32"
+      stage_scores:
+        description: "Scores, comma separated"
+        required: true
+        default: "0,1,3,5,8,12,16"
+      winning_legs:
+        description: "Winning legs by round, comma separated"
+        required: true
+        default: "6,6,6,6,7,8"
+      seeded_players:
+        description: "Seeded players separated by |"
+        required: false
+        default: ""
+      seeded_start_round:
+        description: "Round where seeds enter"
+        required: true
+        default: "2"
+      first_round_matches:
+        description: "Number of first-round matches"
+        required: true
+        default: "16"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: fantasy-live
+  cancel-in-progress: false
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build new tournament
+        shell: bash
+        env:
+          CSV_PATH: ${{ inputs.csv_path }}
+          NAME: ${{ inputs.tournament_name }}
+          SOURCE_URL: ${{ inputs.source_url }}
+          SOURCE_TYPE: ${{ inputs.source_type }}
+          BUDGET: ${{ inputs.budget }}
+          START_STAGE: ${{ inputs.start_stage }}
+          STAGE_SCORES: ${{ inputs.stage_scores }}
+          WINNING_LEGS: ${{ inputs.winning_legs }}
+          SEEDED: ${{ inputs.seeded_players }}
+          SEEDED_START_ROUND: ${{ inputs.seeded_start_round }}
+          FIRST_ROUND_MATCHES: ${{ inputs.first_round_matches }}
+        run: |
+          args=(
+            --csv "$CSV_PATH"
+            --url "$SOURCE_URL"
+            --source "$SOURCE_TYPE"
+            --start-stage "$START_STAGE"
+            --stage-scores "$STAGE_SCORES"
+            --winning-legs "$WINNING_LEGS"
+            --seeded "$SEEDED"
+            --seeded-start-round "$SEEDED_START_ROUND"
+            --first-round-matches "$FIRST_ROUND_MATCHES"
+          )
+          if [ -n "$NAME" ]; then args+=(--name "$NAME"); fi
+          if [ -n "$BUDGET" ]; then args+=(--budget "$BUDGET"); fi
+          python scripts/start_tournament.py "${args[@]}"
+
+      - name: Commit tournament files and archive
+        run: |
+          git config user.name "fantasy-live-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/project.json data/config.json site/data.json site/archive
+          git diff --cached --quiet || git commit -m "Start new fantasy tournament"
+          git push
+
+      - name: Start standings updater
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update.yml --ref main
