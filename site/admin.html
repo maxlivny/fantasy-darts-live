@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fantasy Darts — запуск турнира</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--card:#0e1b2d;--line:#26384f;--text:#f6f8fb;--muted:#9cafc5;--accent:#b8f23d;--danger:#ff7272}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#07111f,#0a1422);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+main{max-width:680px;margin:auto;padding:22px 16px 40px}.brand{font-weight:900;letter-spacing:.08em;color:var(--accent);font-size:13px}
+h1{font-size:28px;margin:8px 0 6px}.lead{color:var(--muted);margin:0 0 20px;line-height:1.45}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px #0003}
+label{display:block;font-weight:750;margin:0 0 7px}.hint{font-size:13px;color:var(--muted);margin-top:7px}
+input,textarea,select,button{width:100%;font:inherit;border-radius:12px}input,textarea,select{background:#091523;color:var(--text);border:1px solid #334861;padding:13px}
+textarea{min-height:115px;resize:vertical}input[type=file]{padding:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat{background:#091523;border:1px solid var(--line);padding:10px;border-radius:12px;text-align:center}.stat b{display:block;font-size:20px;color:var(--accent)}.stat span{font-size:11px;color:var(--muted)}
+button{border:0;padding:15px;font-weight:900;background:var(--accent);color:#132000;margin-top:10px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.status{font-size:13px;color:var(--muted);margin-top:10px}.ok{color:var(--accent)}.bad{color:var(--danger)}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr 1fr}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<main>
+<div class="brand">FANTASY DARTS LIVE</div>
+<h1>Новый турнир</h1>
+<p class="lead">Загрузи CSV после закрытия регистрации. Страница проверит файл и подготовит параметры запуска.</p>
+
+<div class="card">
+<label for="csv">CSV с составами</label>
+<input id="csv" type="file" accept=".csv,text/csv">
+<div id="csvStatus" class="hint">Файл ещё не выбран.</div>
+<div class="summary">
+ <div class="stat"><b id="participants">—</b><span>участников</span></div>
+ <div class="stat"><b id="roster">—</b><span>в составе</span></div>
+ <div class="stat"><b id="budget">—</b><span>бюджет</span></div>
+</div>
+</div>
+
+<div class="card">
+<label for="wiki">Ссылка на результаты</label>
+<input id="wiki" type="url" placeholder="https://en.wikipedia.org/wiki/...">
+<div class="hint">Для European Tour обычно используем английскую Wikipedia.</div>
+</div>
+
+<div class="card">
+<label for="name">Название турнира</label>
+<input id="name" type="text" placeholder="Определится из CSV">
+<div class="grid" style="margin-top:12px">
+ <div><label for="start">Стартовая стадия</label><input id="start" value="1/32"></div>
+ <div><label for="scores">Очки по стадиям</label><input id="scores" value="0,1,3,5,8,12,16"></div>
+</div>
+<div class="grid" style="margin-top:12px">
+ <div><label for="legs">Победные леги</label><input id="legs" value="6,6,6,6,7,8"></div>
+ <div><label for="first">Матчей 1-го раунда</label><input id="first" type="number" value="16"></div>
+</div>
+</div>
+
+<div class="card">
+<label for="seeds">Сеяные игроки</label>
+<textarea id="seeds" placeholder="По одному имени в строке"></textarea>
+<div class="hint">Если сеяные начинают со второго раунда, они получат стартовое очко.</div>
+</div>
+
+<div class="card">
+<button id="launch" disabled>🚀 ЗАПУСТИТЬ ТУРНИР</button>
+<div id="launchStatus" class="status">Пока это безопасный режим: кнопка проверяет готовность формы, но ещё не отправляет данные в GitHub.</div>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let parsed=null;
+function decode1251(buf){
+ try{return new TextDecoder("windows-1251").decode(buf)}catch(e){return new TextDecoder().decode(buf)}
+}
+function rows(text){return text.replace(/\r/g,"").split("\n").filter(Boolean).map(x=>x.split(";"))}
+function parse(text){
+ const rr=rows(text); let tournament="",budget="",participants=0,roster=0;
+ for(const r of rr){
+   if((r[0]||"").trim()==="Окончание турнира"){
+     tournament=(r[2]||"").trim(); budget=(r[3]||"").trim().replace(",",".");
+   }
+ }
+ // Export rows normally start with participant name followed by alternating player/price cells.
+ // Count rows before metadata; infer roster from the first plausible participant row.
+ for(const r of rr){
+   const first=(r[0]||"").trim();
+   if(["Ссылка на турнир","Окончание турнира","Время выгрузки"].includes(first)) break;
+   let numeric=0, names=0;
+   for(let i=1;i<r.length;i++){let v=(r[i]||"").trim(); if(!v)continue; if(/^\d+(?:[.,]\d+)?$/.test(v))numeric++; else names++}
+   if(names>=2 && numeric>=2){participants++; if(!roster)roster=Math.min(names,numeric)}
+ }
+ return {tournament,budget,participants,roster};
+}
+$("csv").addEventListener("change",async e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const buf=await f.arrayBuffer(), text=decode1251(buf); parsed=parse(text);
+ $("participants").textContent=parsed.participants||"?";
+ $("roster").textContent=parsed.roster||"?";
+ $("budget").textContent=parsed.budget||"?";
+ if(parsed.tournament)$("name").value=parsed.tournament;
+ const good=parsed.participants>0 && parsed.roster>0;
+ $("csvStatus").className="hint "+(good?"ok":"bad");
+ $("csvStatus").textContent=good?`✓ ${f.name} прочитан`:"Не удалось уверенно распознать структуру CSV.";
+ $("launch").disabled=!good;
+});
+$("launch").addEventListener("click",()=>{
+ if(!$("wiki").value.trim()){ $("launchStatus").className="status bad"; $("launchStatus").textContent="Сначала вставь ссылку на страницу результатов."; return; }
+ if(!$("name").value.trim()){ $("launchStatus").className="status bad"; $("launchStatus").textContent="Не удалось определить название турнира."; return; }
+ $("launchStatus").className="status ok";
+ $("launchStatus").textContent="✓ Форма готова. На следующем шаге подключим безопасную отправку CSV и запуск GitHub Actions.";
+});
+</script>
+</body>
+</html>
