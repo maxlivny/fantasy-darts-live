@@ -78,17 +78,28 @@ function parse(text){
  const rr=rows(text); let tournament="",budget="",participants=0,roster=0;
  for(const r of rr){
    if((r[0]||"").trim()==="Окончание турнира"){
-     tournament=(r[2]||"").trim(); budget=(r[3]||"").trim().replace(",",".");
+     tournament=(r[2]||"").trim();
+     budget=(r[3]||"").trim().replace(",",".");
    }
  }
- // Export rows normally start with participant name followed by alternating player/price cells.
- // Count rows before metadata; infer roster from the first plausible participant row.
- for(const r of rr){
-   const first=(r[0]||"").trim();
-   if(["Ссылка на турнир","Окончание турнира","Время выгрузки"].includes(first)) break;
-   let numeric=0, names=0;
-   for(let i=1;i<r.length;i++){let v=(r[i]||"").trim(); if(!v)continue; if(/^\d+(?:[.,]\d+)?$/.test(v))numeric++; else names++}
-   if(names>=2 && numeric>=2){participants++; if(!roster)roster=Math.min(names,numeric)}
+ // Формат darts.lapki.su: у каждого участника две строки:
+ // 1) имя участника + игроки начиная с 3-го столбца;
+ // 2) строка цен, также начиная с 3-го столбца.
+ for(let i=0;i<rr.length;i++){
+   const r=rr[i], first=(r[0]||"").trim();
+   if(!first || ["Ссылка на турнир","Окончание турнира","Время выгрузки"].includes(first)) continue;
+   if(["фио","имя","участник"].includes(first.toLowerCase())) continue;
+   if(i+1>=rr.length) continue;
+   const pr=rr[i+1];
+   const playerCells=r.slice(2).map(x=>x.trim()).filter(Boolean);
+   const prices=pr.slice(2).map(x=>x.trim()).filter(x=>x && !x.startsWith("="))
+      .filter(x=>/^-?\d+(?:[.,]\d+)?$/.test(x));
+   const count=Math.min(playerCells.length,prices.length);
+   if(count>0){
+     participants++;
+     if(!roster) roster=count;
+     i++; // пропускаем строку цен
+   }
  }
  return {tournament,budget,participants,roster};
 }
