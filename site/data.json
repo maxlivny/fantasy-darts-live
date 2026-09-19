@@ -1,7 +1,73 @@
 {
   "tournament": "World Series of Darts Finals 2026",
-  "updated_at": "2026-09-19T19:56:05.269298+00:00",
+  "updated_at": "2026-09-19T20:01:25.866302+00:00",
   "standings": [
+    {
+      "name": "Максим Алдошин",
+      "points": 27,
+      "alive": 6,
+      "cost": 96.6,
+      "rating": true,
+      "players": [
+        {
+          "name": "Gerwyn Price",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 19.9
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Josh Rock",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 11.8
+        },
+        {
+          "name": "Kevin Doets",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.1
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Dirk van Duijvenbode",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 8.5
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        }
+      ],
+      "place": 1
+    },
     {
       "name": "Виталий Дубровский",
       "points": 26,
@@ -66,77 +132,11 @@
           "price": 3.5
         }
       ],
-      "place": 1
-    },
-    {
-      "name": "Максим Алдошин",
-      "points": 24,
-      "alive": 6,
-      "cost": 96.6,
-      "rating": true,
-      "players": [
-        {
-          "name": "Gerwyn Price",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 19.9
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Josh Rock",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 11.8
-        },
-        {
-          "name": "Kevin Doets",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.1
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Dirk van Duijvenbode",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 8.5
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        }
-      ],
       "place": 2
     },
     {
       "name": "Наташа Кириллова",
-      "points": 23,
+      "points": 26,
       "alive": 5,
       "cost": 98.9,
       "rating": true,
@@ -164,7 +164,7 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
@@ -199,6 +199,204 @@
         }
       ],
       "place": 3
+    },
+    {
+      "name": "Алексей Букреев",
+      "points": 22,
+      "alive": 5,
+      "cost": 96.0,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Dirk van Duijvenbode",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 8.5
+        },
+        {
+          "name": "Callan Rydz",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.3
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        }
+      ],
+      "place": 4
+    },
+    {
+      "name": "Bruce Wayne",
+      "points": 22,
+      "alive": 5,
+      "cost": 97.1,
+      "rating": false,
+      "players": [
+        {
+          "name": "Michael van Gerwen",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 17.4
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Damon Heta",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.1
+        },
+        {
+          "name": "Danny Noppert",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.4
+        }
+      ],
+      "place": 5
+    },
+    {
+      "name": "Александр Сидоркин",
+      "points": 22,
+      "alive": 5,
+      "cost": 98.2,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Josh Rock",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 11.8
+        },
+        {
+          "name": "Callan Rydz",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.3
+        },
+        {
+          "name": "Ben Robb",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 5.4
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        }
+      ],
+      "place": 6
     },
     {
       "name": "Юрий Вязовский",
@@ -264,12 +462,78 @@
           "price": 3.5
         }
       ],
-      "place": 4
+      "place": 7
+    },
+    {
+      "name": "Егор Дроботов",
+      "points": 21,
+      "alive": 4,
+      "cost": 97.4,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Rob Cross",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 13.5
+        },
+        {
+          "name": "Jim Long",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.5
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        }
+      ],
+      "place": 8
     },
     {
       "name": "Alicus Lomov",
       "points": 21,
-      "alive": 5,
+      "alive": 4,
       "cost": 97.8,
       "rating": true,
       "players": [
@@ -290,8 +554,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -330,7 +594,205 @@
           "price": 3.5
         }
       ],
-      "place": 5
+      "place": 9
+    },
+    {
+      "name": "Артём Кондратов",
+      "points": 21,
+      "alive": 5,
+      "cost": 97.9,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gerwyn Price",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 19.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Josh Rock",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 11.8
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        },
+        {
+          "name": "Danny Noppert",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.4
+        }
+      ],
+      "place": 10
+    },
+    {
+      "name": "Ваня Шушняев",
+      "points": 21,
+      "alive": 5,
+      "cost": 97.9,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        },
+        {
+          "name": "Danny Noppert",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.4
+        }
+      ],
+      "place": 11
+    },
+    {
+      "name": "Тимур Исмаилов",
+      "points": 21,
+      "alive": 4,
+      "cost": 98.7,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Kevin Doets",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.1
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        }
+      ],
+      "place": 12
     },
     {
       "name": "Сергей Шамин",
@@ -396,7 +858,7 @@
           "price": 3.4
         }
       ],
-      "place": 6
+      "place": 13
     },
     {
       "name": "Александр Матвиенко",
@@ -462,12 +924,144 @@
           "price": 3.4
         }
       ],
-      "place": 7
+      "place": 14
+    },
+    {
+      "name": "Никита Щербак",
+      "points": 21,
+      "alive": 4,
+      "cost": 99.0,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Kevin Doets",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.1
+        },
+        {
+          "name": "Karel Sedlacek",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.0
+        },
+        {
+          "name": "Jim Long",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.5
+        },
+        {
+          "name": "Raymond Smith",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.1
+        }
+      ],
+      "place": 15
+    },
+    {
+      "name": "Михаил Смирнов",
+      "points": 20,
+      "alive": 3,
+      "cost": 97.2,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Karel Sedlacek",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.0
+        },
+        {
+          "name": "Motomu Sakai",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.8
+        },
+        {
+          "name": "Viktor Tingstrom",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.2
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        }
+      ],
+      "place": 16
     },
     {
       "name": "Oleg Corcevoi",
       "points": 20,
-      "alive": 4,
+      "alive": 3,
       "cost": 98.0,
       "rating": true,
       "players": [
@@ -488,8 +1082,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -528,21 +1122,21 @@
           "price": 3.6
         }
       ],
-      "place": 8
+      "place": 17
     },
     {
-      "name": "Алексей Букреев",
+      "name": "Дмитрий Тулаев",
       "points": 19,
-      "alive": 5,
-      "cost": 96.0,
+      "alive": 3,
+      "cost": 91.8,
       "rating": true,
       "players": [
         {
-          "name": "Luke Littler",
+          "name": "Luke Humphries",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
         },
         {
           "name": "Jonny Clayton",
@@ -560,31 +1154,24 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Dirk van Duijvenbode",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 8.5
-        },
-        {
-          "name": "Callan Rydz",
+          "name": "Rob Cross",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 8.3
+          "price": 13.5
         },
         {
-          "name": "Chris Dobey",
+          "name": "Raymond Smith",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 7.7
+          "price": 4.1
         },
         {
           "name": "Brody Klinge",
@@ -592,23 +1179,162 @@
           "status": "ВЫБЫЛ",
           "alive": false,
           "price": 4.0
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
         }
       ],
-      "place": 9
+      "place": 18
     },
     {
-      "name": "Bruce Wayne",
+      "name": "Vladislav Lyapunov",
       "points": 19,
-      "alive": 5,
-      "cost": 97.1,
-      "rating": false,
+      "alive": 4,
+      "cost": 95.4,
+      "rating": true,
       "players": [
         {
-          "name": "Michael van Gerwen",
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gian van Veen",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.7
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Stephen Bunting",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 17.4
+          "price": 12.2
+        },
+        {
+          "name": "Jim Long",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.5
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        }
+      ],
+      "place": 19
+    },
+    {
+      "name": "Андрей Цымбалов",
+      "points": 19,
+      "alive": 2,
+      "cost": 96.3,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Karel Sedlacek",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.0
+        },
+        {
+          "name": "Jim Long",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.5
+        },
+        {
+          "name": "Motomu Sakai",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.8
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        }
+      ],
+      "place": 20
+    },
+    {
+      "name": "Владимир Сверчков",
+      "points": 19,
+      "alive": 5,
+      "cost": 96.3,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
         },
         {
           "name": "Gian van Veen",
@@ -625,15 +1351,8 @@
           "price": 15.0
         },
         {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
@@ -653,6 +1372,343 @@
           "price": 7.1
         },
         {
+          "name": "Ben Robb",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 5.4
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        }
+      ],
+      "place": 21
+    },
+    {
+      "name": "Илья Гридчин",
+      "points": 19,
+      "alive": 4,
+      "cost": 96.5,
+      "rating": true,
+      "players": [
+        {
+          "name": "Gerwyn Price",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 19.9
+        },
+        {
+          "name": "Wessel Nijman",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 17.8
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Damon Heta",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.1
+        },
+        {
+          "name": "Ben Robb",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 5.4
+        }
+      ],
+      "place": 22
+    },
+    {
+      "name": "Александр Агапов",
+      "points": 19,
+      "alive": 4,
+      "cost": 97.7,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Rob Cross",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 13.5
+        },
+        {
+          "name": "Dirk van Duijvenbode",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 8.5
+        },
+        {
+          "name": "Callan Rydz",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.3
+        },
+        {
+          "name": "Karel Sedlacek",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.0
+        },
+        {
+          "name": "Adam Leek",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.9
+        }
+      ],
+      "place": 23
+    },
+    {
+      "name": "Валерий Соболевский",
+      "points": 19,
+      "alive": 4,
+      "cost": 98.0,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gerwyn Price",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 19.9
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Maik Kuivenhoven",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.7
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
+        }
+      ],
+      "place": 24
+    },
+    {
+      "name": "Павел Талипов",
+      "points": 19,
+      "alive": 5,
+      "cost": 98.0,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Stephen Bunting",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 12.2
+        },
+        {
+          "name": "Nathan Aspinall",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Dirk van Duijvenbode",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 8.5
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Damon Heta",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.1
+        }
+      ],
+      "place": 25
+    },
+    {
+      "name": "Виталя Медведевских",
+      "points": 19,
+      "alive": 4,
+      "cost": 98.2,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Gerwyn Price",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 19.9
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        },
+        {
           "name": "Danny Noppert",
           "points": 0,
           "status": "ВЫБЫЛ",
@@ -660,14 +1716,14 @@
           "price": 3.4
         }
       ],
-      "place": 10
+      "place": 26
     },
     {
-      "name": "Александр Сидоркин",
+      "name": "Николай Нарышкин",
       "points": 19,
-      "alive": 5,
-      "cost": 98.2,
-      "rating": false,
+      "alive": 4,
+      "cost": 98.6,
+      "rating": true,
       "players": [
         {
           "name": "Luke Littler",
@@ -684,39 +1740,39 @@
           "price": 16.7
         },
         {
-          "name": "Ross Smith",
+          "name": "Jonny Clayton",
           "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
-          "price": 13.9
+          "price": 15.0
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Josh Rock",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 11.8
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
         },
         {
-          "name": "Callan Rydz",
+          "name": "Kevin Doets",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 8.3
+          "price": 10.1
         },
         {
-          "name": "Ben Robb",
+          "name": "Brody Klinge",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 5.4
+          "price": 4.0
         },
         {
           "name": "Jermaine Wattimena",
@@ -726,12 +1782,12 @@
           "price": 3.5
         }
       ],
-      "place": 11
+      "place": 27
     },
     {
       "name": "Ренат Абулев",
       "points": 19,
-      "alive": 5,
+      "alive": 4,
       "cost": 98.9,
       "rating": true,
       "players": [
@@ -745,8 +1801,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -792,7 +1848,7 @@
           "price": 3.4
         }
       ],
-      "place": 12
+      "place": 28
     },
     {
       "name": "Леонид Бурнашов",
@@ -858,12 +1914,12 @@
           "price": 3.4
         }
       ],
-      "place": 13
+      "place": 29
     },
     {
       "name": "Рифат Фахриев",
       "points": 18,
-      "alive": 4,
+      "alive": 3,
       "cost": 89.0,
       "rating": false,
       "players": [
@@ -877,8 +1933,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -924,12 +1980,144 @@
           "price": 3.5
         }
       ],
-      "place": 14
+      "place": 30
+    },
+    {
+      "name": "Рома Придачин",
+      "points": 18,
+      "alive": 3,
+      "cost": 96.7,
+      "rating": false,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Motomu Sakai",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.8
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        }
+      ],
+      "place": 31
+    },
+    {
+      "name": "Дима Курушин",
+      "points": 18,
+      "alive": 3,
+      "cost": 97.3,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Adam Leek",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.9
+        },
+        {
+          "name": "Ben Robb",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 5.4
+        },
+        {
+          "name": "Motomu Sakai",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.8
+        },
+        {
+          "name": "Daryl Gurney",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.6
+        }
+      ],
+      "place": 32
     },
     {
       "name": "Александр Кирюшкин",
       "points": 18,
-      "alive": 4,
+      "alive": 3,
       "cost": 97.4,
       "rating": true,
       "players": [
@@ -943,8 +2131,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -990,205 +2178,7 @@
           "price": 3.6
         }
       ],
-      "place": 15
-    },
-    {
-      "name": "Егор Дроботов",
-      "points": 18,
-      "alive": 4,
-      "cost": 97.4,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Rob Cross",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 13.5
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        }
-      ],
-      "place": 16
-    },
-    {
-      "name": "Артём Кондратов",
-      "points": 18,
-      "alive": 5,
-      "cost": 97.9,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gerwyn Price",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 19.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Josh Rock",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 11.8
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        },
-        {
-          "name": "Danny Noppert",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.4
-        }
-      ],
-      "place": 17
-    },
-    {
-      "name": "Ваня Шушняев",
-      "points": 18,
-      "alive": 5,
-      "cost": 97.9,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        },
-        {
-          "name": "Danny Noppert",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.4
-        }
-      ],
-      "place": 18
+      "place": 33
     },
     {
       "name": "Фаниль Фатыхов",
@@ -1254,13 +2244,13 @@
           "price": 4.8
         }
       ],
-      "place": 19
+      "place": 34
     },
     {
-      "name": "Тимур Исмаилов",
+      "name": "Андрей Малышев",
       "points": 18,
-      "alive": 4,
-      "cost": 98.7,
+      "alive": 3,
+      "cost": 98.2,
       "rating": true,
       "players": [
         {
@@ -1271,11 +2261,11 @@
           "price": 25.0
         },
         {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
         },
         {
           "name": "Jonny Clayton",
@@ -1286,24 +2276,90 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Ryan Searle",
+          "name": "Jim Long",
           "points": 2,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 10.7
+          "price": 6.5
         },
         {
-          "name": "Kevin Doets",
+          "name": "Simon Whitlock",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 10.1
+          "price": 5.0
+        },
+        {
+          "name": "Motomu Sakai",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.8
+        },
+        {
+          "name": "Viktor Tingstrom",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.2
+        }
+      ],
+      "place": 35
+    },
+    {
+      "name": "Александр Громов",
+      "points": 18,
+      "alive": 3,
+      "cost": 98.4,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "Ross Smith",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.9
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 7.7
+        },
+        {
+          "name": "Jim Long",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.5
         },
         {
           "name": "Brody Klinge",
@@ -1320,12 +2376,12 @@
           "price": 3.6
         }
       ],
-      "place": 20
+      "place": 36
     },
     {
       "name": "Денис Новиков",
       "points": 18,
-      "alive": 3,
+      "alive": 2,
       "cost": 99.0,
       "rating": false,
       "players": [
@@ -1339,8 +2395,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -1386,205 +2442,7 @@
           "price": 4.1
         }
       ],
-      "place": 21
-    },
-    {
-      "name": "Никита Щербак",
-      "points": 18,
-      "alive": 4,
-      "cost": 99.0,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Kevin Doets",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.1
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.0
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Raymond Smith",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.1
-        }
-      ],
-      "place": 22
-    },
-    {
-      "name": "Михаил Смирнов",
-      "points": 17,
-      "alive": 3,
-      "cost": 97.2,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.0
-        },
-        {
-          "name": "Motomu Sakai",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.8
-        },
-        {
-          "name": "Viktor Tingstrom",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.2
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        }
-      ],
-      "place": 23
-    },
-    {
-      "name": "Дмитрий Тулаев",
-      "points": 16,
-      "alive": 3,
-      "cost": 91.8,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Rob Cross",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 13.5
-        },
-        {
-          "name": "Raymond Smith",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.1
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        }
-      ],
-      "place": 24
+      "place": 37
     },
     {
       "name": "Владислав Желудев",
@@ -1650,80 +2508,14 @@
           "price": 3.4
         }
       ],
-      "place": 25
+      "place": 38
     },
     {
-      "name": "Vladislav Lyapunov",
+      "name": "Степан Удалов",
       "points": 16,
-      "alive": 4,
-      "cost": 95.4,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Stephen Bunting",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 12.2
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        }
-      ],
-      "place": 26
-    },
-    {
-      "name": "Андрей Цымбалов",
-      "points": 16,
-      "alive": 2,
-      "cost": 96.3,
-      "rating": true,
+      "alive": 3,
+      "cost": 97.2,
+      "rating": false,
       "players": [
         {
           "name": "Luke Littler",
@@ -1740,197 +2532,6 @@
           "price": 24.1
         },
         {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.0
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Motomu Sakai",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.8
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        }
-      ],
-      "place": 27
-    },
-    {
-      "name": "Владимир Сверчков",
-      "points": 16,
-      "alive": 5,
-      "cost": 96.3,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Damon Heta",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.1
-        },
-        {
-          "name": "Ben Robb",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 5.4
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        }
-      ],
-      "place": 28
-    },
-    {
-      "name": "Илья Гридчин",
-      "points": 16,
-      "alive": 5,
-      "cost": 96.5,
-      "rating": true,
-      "players": [
-        {
-          "name": "Gerwyn Price",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 19.9
-        },
-        {
-          "name": "Wessel Nijman",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 17.8
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Damon Heta",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.1
-        },
-        {
-          "name": "Ben Robb",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 5.4
-        }
-      ],
-      "place": 29
-    },
-    {
-      "name": "Александр Агапов",
-      "points": 16,
-      "alive": 4,
-      "cost": 97.7,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
           "name": "Ross Smith",
           "points": 5,
           "status": "В ИГРЕ",
@@ -1939,288 +2540,10 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
-        },
-        {
-          "name": "Rob Cross",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 13.5
-        },
-        {
-          "name": "Dirk van Duijvenbode",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 8.5
-        },
-        {
-          "name": "Callan Rydz",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.3
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.0
-        },
-        {
-          "name": "Adam Leek",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.9
-        }
-      ],
-      "place": 30
-    },
-    {
-      "name": "Валерий Соболевский",
-      "points": 16,
-      "alive": 4,
-      "cost": 98.0,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gerwyn Price",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 19.9
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Maik Kuivenhoven",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.7
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        }
-      ],
-      "place": 31
-    },
-    {
-      "name": "Павел Талипов",
-      "points": 16,
-      "alive": 5,
-      "cost": 98.0,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Stephen Bunting",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 12.2
-        },
-        {
-          "name": "Nathan Aspinall",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Dirk van Duijvenbode",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 8.5
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Damon Heta",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.1
-        }
-      ],
-      "place": 32
-    },
-    {
-      "name": "Виталя Медведевских",
-      "points": 16,
-      "alive": 4,
-      "cost": 98.2,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gerwyn Price",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 19.9
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Danny Noppert",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.4
-        }
-      ],
-      "place": 33
-    },
-    {
-      "name": "Николай Нарышкин",
-      "points": 16,
-      "alive": 4,
-      "cost": 98.6,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Gian van Veen",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.7
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
         },
         {
           "name": "Kevin Doets",
@@ -2230,11 +2553,11 @@
           "price": 10.1
         },
         {
-          "name": "Brody Klinge",
-          "points": 0,
+          "name": "Daryl Gurney",
+          "points": 2,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 4.0
+          "price": 3.6
         },
         {
           "name": "Jermaine Wattimena",
@@ -2242,14 +2565,21 @@
           "status": "ВЫБЫЛ",
           "alive": false,
           "price": 3.5
+        },
+        {
+          "name": "Danny Noppert",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.4
         }
       ],
-      "place": 34
+      "place": 39
     },
     {
       "name": "Максим Редькин",
       "points": 16,
-      "alive": 4,
+      "alive": 3,
       "cost": 98.7,
       "rating": true,
       "players": [
@@ -2270,8 +2600,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -2310,7 +2640,7 @@
           "price": 3.5
         }
       ],
-      "place": 35
+      "place": 40
     },
     {
       "name": "Олег Ермаков",
@@ -2376,7 +2706,7 @@
           "price": 3.4
         }
       ],
-      "place": 36
+      "place": 41
     },
     {
       "name": "Макс Мацюсь",
@@ -2442,7 +2772,7 @@
           "price": 6.5
         }
       ],
-      "place": 37
+      "place": 42
     },
     {
       "name": "Юрий Поршнев",
@@ -2508,79 +2838,13 @@
           "price": 3.5
         }
       ],
-      "place": 38
+      "place": 43
     },
     {
-      "name": "Рома Придачин",
-      "points": 15,
+      "name": "Виктор Фомин",
+      "points": 16,
       "alive": 3,
-      "cost": 96.7,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Motomu Sakai",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.8
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        }
-      ],
-      "place": 39
-    },
-    {
-      "name": "Дима Курушин",
-      "points": 15,
-      "alive": 3,
-      "cost": 97.3,
+      "cost": 98.9,
       "rating": true,
       "players": [
         {
@@ -2598,39 +2862,98 @@
           "price": 24.1
         },
         {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Adam Leek",
+          "name": "Josh Rock",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 11.8
+        },
+        {
+          "name": "Callan Rydz",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 6.9
+          "price": 8.3
         },
         {
-          "name": "Ben Robb",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 5.4
-        },
-        {
-          "name": "Motomu Sakai",
+          "name": "Karel Sedlacek",
           "points": 2,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 4.8
+          "price": 8.0
+        },
+        {
+          "name": "Raymond Smith",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.1
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
+        }
+      ],
+      "place": 44
+    },
+    {
+      "name": "Олег Шляпин",
+      "points": 16,
+      "alive": 3,
+      "cost": 98.9,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Luke Humphries",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 24.1
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Kevin Doets",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.1
+        },
+        {
+          "name": "Brody Klinge",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.0
         },
         {
           "name": "Daryl Gurney",
@@ -2638,14 +2961,21 @@
           "status": "ВЫБЫЛ",
           "alive": false,
           "price": 3.6
+        },
+        {
+          "name": "Jermaine Wattimena",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.5
         }
       ],
-      "place": 40
+      "place": 45
     },
     {
       "name": "Константин Юрьев",
       "points": 15,
-      "alive": 3,
+      "alive": 2,
       "cost": 97.9,
       "rating": false,
       "players": [
@@ -2666,8 +2996,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -2706,139 +3036,7 @@
           "price": 3.6
         }
       ],
-      "place": 41
-    },
-    {
-      "name": "Андрей Малышев",
-      "points": 15,
-      "alive": 3,
-      "cost": 98.2,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Simon Whitlock",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 5.0
-        },
-        {
-          "name": "Motomu Sakai",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.8
-        },
-        {
-          "name": "Viktor Tingstrom",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.2
-        }
-      ],
-      "place": 42
-    },
-    {
-      "name": "Александр Громов",
-      "points": 15,
-      "alive": 3,
-      "cost": 98.4,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Jim Long",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.5
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        }
-      ],
-      "place": 43
+      "place": 46
     },
     {
       "name": "Роман Изутов",
@@ -2904,7 +3102,73 @@
           "price": 3.6
         }
       ],
-      "place": 44
+      "place": 47
+    },
+    {
+      "name": "Сергей Лубков",
+      "points": 14,
+      "alive": 3,
+      "cost": 96.9,
+      "rating": true,
+      "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Michael van Gerwen",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 17.4
+        },
+        {
+          "name": "Jonny Clayton",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 15.0
+        },
+        {
+          "name": "James Wade",
+          "points": 5,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 13.6
+        },
+        {
+          "name": "Ryan Searle",
+          "points": 2,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 10.7
+        },
+        {
+          "name": "Adam Leek",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.9
+        },
+        {
+          "name": "Viktor Tingstrom",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.2
+        },
+        {
+          "name": "Raymond Smith",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.1
+        }
+      ],
+      "place": 48
     },
     {
       "name": "Костя Виноградов",
@@ -2970,7 +3234,7 @@
           "price": 3.5
         }
       ],
-      "place": 45
+      "place": 49
     },
     {
       "name": "Павел Соколов",
@@ -3036,7 +3300,7 @@
           "price": 3.5
         }
       ],
-      "place": 46
+      "place": 50
     },
     {
       "name": "Kobe Bryant",
@@ -3102,7 +3366,7 @@
           "price": 4.1
         }
       ],
-      "place": 47
+      "place": 51
     },
     {
       "name": "Дмитрий Корышев",
@@ -3168,7 +3432,7 @@
           "price": 4.2
         }
       ],
-      "place": 48
+      "place": 52
     },
     {
       "name": "Егор Ее",
@@ -3234,7 +3498,7 @@
           "price": 3.6
         }
       ],
-      "place": 49
+      "place": 53
     },
     {
       "name": "Elvira Okotetto",
@@ -3300,7 +3564,7 @@
           "price": 3.4
         }
       ],
-      "place": 50
+      "place": 54
     },
     {
       "name": "Светлана Жиделева",
@@ -3366,160 +3630,21 @@
           "price": 3.4
         }
       ],
-      "place": 51
+      "place": 55
     },
     {
-      "name": "Степан Удалов",
-      "points": 13,
+      "name": "Евгений Шестаков",
+      "points": 12,
       "alive": 3,
-      "cost": 97.2,
-      "rating": false,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "Ross Smith",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.9
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Kevin Doets",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.1
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        },
-        {
-          "name": "Danny Noppert",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.4
-        }
-      ],
-      "place": 52
-    },
-    {
-      "name": "Виктор Фомин",
-      "points": 13,
-      "alive": 3,
-      "cost": 98.9,
+      "cost": 87.6,
       "rating": true,
       "players": [
         {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Josh Rock",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 11.8
-        },
-        {
-          "name": "Callan Rydz",
+          "name": "Michael van Gerwen",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 8.3
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.0
-        },
-        {
-          "name": "Raymond Smith",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.1
-        },
-        {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        }
-      ],
-      "place": 53
-    },
-    {
-      "name": "Олег Шляпин",
-      "points": 13,
-      "alive": 3,
-      "cost": 98.9,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Luke Humphries",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 24.1
+          "price": 17.4
         },
         {
           "name": "Jonny Clayton",
@@ -3530,31 +3655,38 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Kevin Doets",
+          "name": "Rob Cross",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 10.1
+          "price": 13.5
         },
         {
-          "name": "Brody Klinge",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.0
-        },
-        {
-          "name": "Daryl Gurney",
+          "name": "Nathan Aspinall",
           "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 10.0
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 3.6
+          "price": 7.7
+        },
+        {
+          "name": "Adam Leek",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 6.9
         },
         {
           "name": "Jermaine Wattimena",
@@ -3564,7 +3696,7 @@
           "price": 3.5
         }
       ],
-      "place": 54
+      "place": 56
     },
     {
       "name": "Григорий Адамов",
@@ -3630,73 +3762,7 @@
           "price": 3.5
         }
       ],
-      "place": 55
-    },
-    {
-      "name": "Сергей Лубков",
-      "points": 11,
-      "alive": 3,
-      "cost": 96.9,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Michael van Gerwen",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 17.4
-        },
-        {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Ryan Searle",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.7
-        },
-        {
-          "name": "Adam Leek",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.9
-        },
-        {
-          "name": "Viktor Tingstrom",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.2
-        },
-        {
-          "name": "Raymond Smith",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.1
-        }
-      ],
-      "place": 56
+      "place": 57
     },
     {
       "name": "Александр Кудалин",
@@ -3762,7 +3828,7 @@
           "price": 6.5
         }
       ],
-      "place": 57
+      "place": 58
     },
     {
       "name": "Сергей Пешков",
@@ -3828,12 +3894,12 @@
           "price": 4.8
         }
       ],
-      "place": 58
+      "place": 59
     },
     {
       "name": "Игорь Онешко",
       "points": 11,
-      "alive": 3,
+      "alive": 2,
       "cost": 98.6,
       "rating": true,
       "players": [
@@ -3847,8 +3913,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -3894,15 +3960,22 @@
           "price": 5.4
         }
       ],
-      "place": 59
+      "place": 60
     },
     {
-      "name": "Евгений Шестаков",
+      "name": "Владимир Еременко",
       "points": 9,
-      "alive": 3,
-      "cost": 87.6,
+      "alive": 2,
+      "cost": 85.6,
       "rating": true,
       "players": [
+        {
+          "name": "Luke Littler",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
         {
           "name": "Michael van Gerwen",
           "points": 0,
@@ -3911,46 +3984,39 @@
           "price": 17.4
         },
         {
-          "name": "Jonny Clayton",
-          "points": 5,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 15.0
-        },
-        {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
         },
         {
-          "name": "Rob Cross",
+          "name": "Kevin Doets",
           "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 13.5
+          "price": 10.1
         },
         {
-          "name": "Nathan Aspinall",
+          "name": "Callan Rydz",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 8.3
+        },
+        {
+          "name": "Raymond Smith",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 4.1
+        },
+        {
+          "name": "Daryl Gurney",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 10.0
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 0,
           "status": "ВЫБЫЛ",
           "alive": false,
-          "price": 7.7
-        },
-        {
-          "name": "Adam Leek",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 6.9
+          "price": 3.6
         },
         {
           "name": "Jermaine Wattimena",
@@ -3960,7 +4026,7 @@
           "price": 3.5
         }
       ],
-      "place": 60
+      "place": 61
     },
     {
       "name": "Василий Сычёв",
@@ -4026,12 +4092,12 @@
           "price": 3.4
         }
       ],
-      "place": 61
+      "place": 62
     },
     {
       "name": "Сергей Шорин",
       "points": 9,
-      "alive": 2,
+      "alive": 1,
       "cost": 93.4,
       "rating": true,
       "players": [
@@ -4045,8 +4111,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -4092,77 +4158,11 @@
           "price": 4.0
         }
       ],
-      "place": 62
-    },
-    {
-      "name": "Владимир Еременко",
-      "points": 6,
-      "alive": 2,
-      "cost": 85.6,
-      "rating": true,
-      "players": [
-        {
-          "name": "Luke Littler",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Michael van Gerwen",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 17.4
-        },
-        {
-          "name": "James Wade",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 13.6
-        },
-        {
-          "name": "Kevin Doets",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 10.1
-        },
-        {
-          "name": "Callan Rydz",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 8.3
-        },
-        {
-          "name": "Raymond Smith",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 4.1
-        },
-        {
-          "name": "Daryl Gurney",
-          "points": 2,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.6
-        },
-        {
-          "name": "Jermaine Wattimena",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.5
-        }
-      ],
       "place": 63
     },
     {
       "name": "Александр Жмарёв",
-      "points": 6,
+      "points": 9,
       "alive": 3,
       "cost": 95.0,
       "rating": true,
@@ -4183,7 +4183,7 @@
         },
         {
           "name": "James Wade",
-          "points": 2,
+          "points": 5,
           "status": "В ИГРЕ",
           "alive": true,
           "price": 13.6
@@ -4229,7 +4229,7 @@
     {
       "name": "Игорь Мошков",
       "points": 6,
-      "alive": 2,
+      "alive": 1,
       "cost": 97.5,
       "rating": true,
       "players": [
@@ -4243,8 +4243,8 @@
         {
           "name": "Wessel Nijman",
           "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 17.8
         },
         {
@@ -4298,6 +4298,12 @@
       "winner": "Jonny Clayton",
       "loser": "Motomu Sakai",
       "score": "10-8",
+      "round": 2
+    },
+    {
+      "winner": "James Wade",
+      "loser": "Wessel Nijman",
+      "score": "10-7",
       "round": 2
     },
     {
@@ -4359,15 +4365,9 @@
       "loser": "Simon Whitlock",
       "score": "6-4",
       "round": 1
-    },
-    {
-      "winner": "James Wade",
-      "loser": "Damon Heta",
-      "score": "6-5",
-      "round": 1
     }
   ],
-  "matches_count": 22,
+  "matches_count": 23,
   "site_title": "Fantasy World Series of Darts Finals 2026",
   "refresh_seconds": 60,
   "source_url": "https://en.wikipedia.org/wiki/2026_World_Series_of_Darts_Finals",
