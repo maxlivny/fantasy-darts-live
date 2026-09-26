@@ -757,6 +757,9 @@ def parse_dartconnect_rendered_text(
 
         key = (round_no, normalize_name(winner), normalize_name(loser))
         if key in seen:
+            duplicates.append(
+                f"#{row_index}: повтор пары в раунде {round_no} | {line}"
+            )
             continue
         seen.add(key)
         matches.append({
@@ -862,6 +865,8 @@ def parse_dartconnect_dom_rows(
     matches: list[dict[str, Any]] = []
     seen: set[tuple[int, str, str]] = set()
     skipped: list[str] = []
+    duplicates: list[str] = []
+    incomplete: list[str] = []
 
     for row_index, row in enumerate(rows, start=1):
         line = re.sub(r"\s+", " ", str(row.get("text", ""))).strip()
@@ -944,7 +949,10 @@ def parse_dartconnect_dom_rows(
 
         required = winning_legs_by_round.get(round_no)
         if not is_completed_numeric_score(score1, score2, required):
-            # Live-матчи в диагностике не считаем ошибкой.
+            incomplete.append(
+                f"#{row_index}: счёт {score1}-{score2}, раунд {round_no}, "
+                f"лимит {required}, заголовок={heading!r} | {line}"
+            )
             continue
 
         if score1 > score2:
@@ -965,10 +973,21 @@ def parse_dartconnect_dom_rows(
             "round": round_no,
         })
 
-    if skipped:
-        print("DartConnect: пропущенные строки:", file=sys.stderr)
-        for item in skipped:
-            print("  " + item, file=sys.stderr)
+    print(
+        f"DartConnect: диагностика DOM: всего {len(rows)}, "
+        f"принято {len(matches)}, без счёта/имён {len(skipped)}, "
+        f"неполный счёт {len(incomplete)}, дубли {len(duplicates)}.",
+        file=sys.stderr,
+    )
+    for label, items in (
+        ("пропущенные строки", skipped),
+        ("счёт не принят", incomplete),
+        ("дубликаты", duplicates),
+    ):
+        if items:
+            print(f"DartConnect: {label}:", file=sys.stderr)
+            for item in items[:200]:
+                print("  " + item, file=sys.stderr)
 
     return matches
 
@@ -1104,6 +1123,16 @@ def fetch_dartconnect_matches(
         parsed_round = int(parsed_match.get("round", 0))
         parsed_round_counts[parsed_round] = parsed_round_counts.get(parsed_round, 0) + 1
     print(f"DartConnect: по раундам {parsed_round_counts}.")
+    # Для стандартного PC со 128 игроками ожидается 127 завершённых матчей.
+    # Не подменяем недостающие результаты выдуманными победами/поражениями.
+    if rounds_count == 7 and len(matches) != 127:
+        print(
+            f"DartConnect WARNING: для сетки на 128 игроков "
+            f"ожидается 127 матчей после окончания турнира; "
+            f"сейчас распознано {len(matches)}. "
+            f"Проверьте диагностические строки выше.",
+            file=sys.stderr,
+        )
 
     if not matches and dom_rows:
         raise RuntimeError(
