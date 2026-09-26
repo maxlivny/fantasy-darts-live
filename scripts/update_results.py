@@ -1252,6 +1252,23 @@ def calculate(project: dict[str, Any], matches: list[dict[str, Any]]) -> dict[st
 
     converted_scores = normalize_stage_scores(stage_scores)
 
+    # Полная сетка на 128 игроков: 64 + 32 + 16 + 8 + 4 + 2 + 1 = 127.
+    # Не считаем турнир завершённым только по появлению финала: ранее
+    # DartConnect пропускал четыре четвертьфинала, хотя финал уже был.
+    rounds_count = max(0, len(converted_scores) - 1)
+    expected_matches = 2 ** rounds_count - 1 if rounds_count > 0 else 0
+    has_final = any(
+        int(match.get("round") or 0) == rounds_count for match in matches
+    )
+    tournament_finished = bool(
+        rounds_count == 7
+        and expected_matches == 127
+        and len(matches) == expected_matches
+        and has_final
+    )
+    if tournament_finished:
+        print("DartConnect: полная сетка PC (127/127); все статусы закрыты.")
+
     # Статус "ВЫБЫЛ" ставим только игрокам, для которых найден
     # фактический проигранный матч. Нельзя автоматически считать игрока
     # выбывшим только потому, что на странице уже появился матч более
@@ -1298,7 +1315,9 @@ def calculate(project: dict[str, Any], matches: list[dict[str, Any]]) -> dict[st
             if manual_status.get(norm, False):
                 is_alive = False
                 status = "ВЫБЫЛ"
-            elif player in eliminated:
+            elif tournament_finished or player in eliminated:
+                # После завершения турнира закрываем также победителя и
+                # дартсменов, отсутствовавших в фактической сетке.
                 is_alive = False
                 status = "ВЫБЫЛ"
             else:
