@@ -572,12 +572,13 @@ def dartconnect_round(value: Any, rounds_count: int) -> int | None:
     text = normalize_name(str(value or ""))
     if not text:
         return None
-    if "final" in text and "semi" not in text:
-        return rounds_count
-    if "semi" in text:
-        return max(1, rounds_count - 1)
+    # Quarter-Finals also contains "final": check specific stages first.
     if "quarter" in text or "last 8" in text:
         return max(1, rounds_count - 2)
+    if "semi" in text:
+        return max(1, rounds_count - 1)
+    if "final" in text:
+        return rounds_count
     m = re.search(r"(?:last|round of|r)\s*(128|64|32|16|8|4|2|1)\b", text)
     if m:
         field = int(m.group(1))
@@ -660,12 +661,13 @@ def dartconnect_round_from_heading(value: str, rounds_count: int) -> int | None:
         4: 6,
         2: 7,
     }
-    if "final" in text and "semi" not in text:
-        return rounds_count
-    if "semi" in text:
-        return max(1, rounds_count - 1)
+    # Quarter-Finals also contains "final": check specific stages first.
     if "quarter" in text:
         return max(1, rounds_count - 2)
+    if "semi" in text:
+        return max(1, rounds_count - 1)
+    if "final" in text:
+        return rounds_count
     match = re.search(r"(?:top|last|round of)\s*(128|64|32|16|8|4|2)\b", text)
     if match:
         field = int(match.group(1))
