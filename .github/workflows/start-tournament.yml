@@ -3,6 +3,14 @@ name: Start new tournament
 on:
   workflow_dispatch:
     inputs:
+      rating_participants:
+        description: "Confirmed rating participant names, one per line"
+        required: false
+        default: ""
+      rating_slots:
+        description: "Number of rating places"
+        required: false
+        default: "0"
       csv_path:
         description: "CSV path in repo (example: incoming/tournament.csv)"
         required: true
@@ -74,6 +82,8 @@ jobs:
       - name: Build new tournament
         shell: bash
         env:
+          RATING_PARTICIPANTS: ${{ inputs.rating_participants }}
+          RATING_SLOTS: ${{ inputs.rating_slots }}
           CSV_PATH: ${{ inputs.csv_path }}
           NAME: ${{ inputs.tournament_name }}
           SOURCE_URL: ${{ inputs.source_url }}
@@ -88,6 +98,8 @@ jobs:
         run: |
           args=(
             --csv "$CSV_PATH"
+            --rating-participants "$RATING_PARTICIPANTS"
+            --rating-slots "$RATING_SLOTS"
             --url "$SOURCE_URL"
             --source "$SOURCE_TYPE"
             --start-stage "$START_STAGE"
