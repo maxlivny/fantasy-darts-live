@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import re
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -177,6 +178,8 @@ def main() -> None:
     ap.add_argument("--seeded-start-round", type=int, default=2)
     ap.add_argument("--first-round-matches", type=int, default=16)
     ap.add_argument("--no-archive", action="store_true")
+    ap.add_argument("--rating-participants", default="")
+    ap.add_argument("--rating-slots", type=int, default=0)
     args = ap.parse_args()
 
     participants, meta = parse_fantasy_csv(Path(args.csv))
@@ -199,6 +202,19 @@ def main() -> None:
         print("WARNING: сеяные отсутствуют в фэнтези-составах (это допустимо): " + ", ".join(unknown_seeds))
     tournament_players = sorted(set(players) | set(seeded))
 
+    def norm(value: str) -> str:
+        return " ".join(unicodedata.normalize("NFKC", value).casefold().replace("ё", "е").split())
+
+    rating_participants = [x.strip() for x in args.rating_participants.splitlines() if x.strip()]
+    if args.rating_slots < 0 or len(rating_participants) != args.rating_slots:
+        raise ValueError(f"Рейтинговых мест: {args.rating_slots}, имён: {len(rating_participants)}")
+    if len({norm(x) for x in rating_participants}) != len(rating_participants):
+        raise ValueError("В рейтинговом списке есть повторяющиеся имена")
+    registered = {norm(p["name"]) for p in participants}
+    missing = [x for x in rating_participants if norm(x) not in registered]
+    if missing:
+        raise ValueError("Не собрали состав (замените резервистами): " + ", ".join(missing))
+
     archived = None if args.no_archive else archive_current()
     project = {
         "participants": participants,
@@ -217,7 +233,7 @@ def main() -> None:
             "stage_scores": scores,
             "seeded_start_round": args.seeded_start_round,
             "winning_legs_by_round": {str(i): v for i, v in enumerate(legs, 1)},
-            "rating_participants": [],
+            "rating_participants": rating_participants,
             "first_round_matches": args.first_round_matches,
         },
     }
