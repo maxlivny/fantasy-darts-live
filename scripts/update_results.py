@@ -479,43 +479,10 @@ def fetch_wikipedia_matches(
     payload = response.json().get("parse", {})
     wikitext = payload.get("wikitext", "")
 
+    # Временная диагностика для Czech Darts Open 2026.
+    # Она показывает фактический формат страницы в логе GitHub Actions.
     print_wikipedia_diagnostics(wikitext)
 
-    # IMPORTANT: if Wikipedia contains a real RD*-team/RD*-score bracket,
-    # it is the authoritative source for completed matches.  Do not parse
-    # Schedule first: schedule rows can contain other numeric fragments
-    # (session/order/format information) that look like a match score and
-    # may create a false result for a match that has not been played yet.
-    bracket_structure_present = bool(
-        re.search(
-            r"(?im)^\s*\|\s*RD\d+-(?:team|score)\s*0*\d+\s*=",
-            str(wikitext or ""),
-        )
-    )
-
-    if bracket_structure_present:
-        matches = parse_bracket_wikitext(
-            wikitext,
-            players,
-            winning_legs_by_round,
-            rounds_count,
-        )
-
-        round_counts: dict[int, int] = {}
-        for item in matches:
-            rnd = int(item.get("round", 0))
-            round_counts[rnd] = round_counts.get(rnd, 0) + 1
-
-        print(
-            f"Wikipedia: bracket распознан, завершённых матчей {len(matches)}; "
-            f"по раундам {round_counts}."
-        )
-        # Empty bracket scores are normal before the first match.  Returning
-        # [] here is deliberate and prevents a fallback to Schedule.
-        return matches
-
-    # Fallback for Wikipedia pages that genuinely use a Schedule table and
-    # do not expose an RD*-bracket.
     matches = parse_schedule_wikitext(
         wikitext,
         players,
@@ -527,6 +494,45 @@ def fetch_wikipedia_matches(
     if matches:
         print(f"Wikipedia: распознана таблица Schedule, матчей {len(matches)}.")
         return matches
+
+    matches = parse_bracket_wikitext(
+        wikitext,
+        players,
+        winning_legs_by_round,
+        rounds_count,
+    )
+
+    if matches:
+        round_counts: dict[int, int] = {}
+        for item in matches:
+            rnd = int(item.get("round", 0))
+            round_counts[rnd] = round_counts.get(rnd, 0) + 1
+        print(
+            f"Wikipedia: распознан bracket, матчей {len(matches)}; "
+            f"по раундам {round_counts}."
+        )
+        print("Wikipedia: распознанные матчи bracket:", file=sys.stderr)
+        for index, item in enumerate(matches, start=1):
+            print(
+                f"  #{index}: R{item.get('round', '?')} | "
+                f"{item.get('winner', '?')} {item.get('score', '?')} "
+                f"{item.get('loser', '?')}",
+                file=sys.stderr,
+            )
+        return matches
+
+    # На Czech Darts Open используется {{48TeamBracket}}.
+    # До первого завершённого матча команды уже заполнены, а score-поля пустые.
+    # Наличие RD*-team/RD*-score означает, что формат распознан корректно.
+    bracket_structure_present = bool(
+        re.search(
+            r"(?im)^\s*\|\s*RD\d+-(?:team|score)\s*0*\d+\s*=",
+            str(wikitext or ""),
+        )
+    )
+    if bracket_structure_present:
+        print("Wikipedia: bracket распознан, завершённых матчей пока 0.")
+        return []
 
     raise RuntimeError(
         "Wikipedia загрузилась, но текущий формат страницы пока не распознан. "
