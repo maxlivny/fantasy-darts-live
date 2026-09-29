@@ -350,6 +350,21 @@ def parse_bracket_wikitext(
             if not player1 or not player2 or player1 == player2:
                 continue
 
+            # Защита от преждевременно/ошибочно заполненных score-полей Wikipedia.
+            # В PDCFlag на страницах PDC после реально сыгранного матча Wikipedia
+            # заполняет avg= для обоих игроков. Если шаблон этой сетки использует
+            # avg=, но хотя бы у одного игрока average ещё пустой, матч не считаем
+            # завершённым даже при наличии чисел в RD*-score.
+            pair_uses_avg = bool(
+                re.search(r"\bavg\s*=", raw_team1, flags=re.I)
+                or re.search(r"\bavg\s*=", raw_team2, flags=re.I)
+            )
+            if pair_uses_avg:
+                avg1 = re.search(r"\bavg\s*=\s*(\d+(?:[.,]\d+)?)", raw_team1, flags=re.I)
+                avg2 = re.search(r"\bavg\s*=\s*(\d+(?:[.,]\d+)?)", raw_team2, flags=re.I)
+                if not avg1 or not avg2:
+                    continue
+
             score1_text = clean_wikitext_cell(raw_score1)
             score2_text = clean_wikitext_cell(raw_score2)
             combined_score = f"{score1_text} {score2_text}"
@@ -511,14 +526,6 @@ def fetch_wikipedia_matches(
             f"Wikipedia: распознан bracket, матчей {len(matches)}; "
             f"по раундам {round_counts}."
         )
-        print("Wikipedia: распознанные матчи bracket:", file=sys.stderr)
-        for index, item in enumerate(matches, start=1):
-            print(
-                f"  #{index}: R{item.get('round', '?')} | "
-                f"{item.get('winner', '?')} {item.get('score', '?')} "
-                f"{item.get('loser', '?')}",
-                file=sys.stderr,
-            )
         return matches
 
     # На Czech Darts Open используется {{48TeamBracket}}.
