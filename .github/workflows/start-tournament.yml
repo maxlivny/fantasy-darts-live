@@ -115,14 +115,29 @@ jobs:
           python scripts/start_tournament.py "${args[@]}"
 
       - name: Verify generated tournament
+        shell: bash
         env:
           EXPECTED_NAME: ${{ inputs.tournament_name }}
           EXPECTED_SLOTS: ${{ inputs.rating_slots }}
         run: |
-          python - <<'PY_CHECK'
-          import json, os, sys
-          from pathlib import Path
+          python -c 'import json, os, pathlib, sys; p=json.loads(pathlib.Path("data/project.json").read_text(encoding="utf-8")); c=json.loads(pathlib.Path("data/config.json").read_text(encoding="utf-8")); s=json.loads(pathlib.Path("site/data.json").read_text(encoding="utf-8")); name=os.environ["EXPECTED_NAME"].strip(); actual=p["settings"]["tournament_name"]; print("Project:",actual,"Config:",c["site_title"],"Site:",s["tournament"],"Participants:",len(p["participants"])); assert (not name or actual==name) and s["tournament"]==actual and c["site_title"]=="Fantasy "+actual and (not os.environ["EXPECTED_SLOTS"].strip() or len(p["participants"])==int(os.environ["EXPECTED_SLOTS"])), "Tournament verification failed"'
+          git status --short
 
-          project = json.loads(Path("data/project.json").read_text(encoding="utf-8"))
-          config = json.loads(Path("data/config.json").read_text(encoding="utf-8"))
-          site = json.loads(Path("site/data.json").read_text(encoding="utf-8"))
+      - name: Commit tournament files and archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "fantasy-live-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/project.json data/config.json site/data.json site/archive
+          if git diff --cached --quiet; then
+            echo "ERROR: No tournament files changed. Refusing to report success."
+            exit 1
+          fi
+          git commit -m "Start new fantasy tournament"
+          git push
+
+      - name: Start standings updater
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update.yml --ref main
