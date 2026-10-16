@@ -111,17 +111,18 @@ jobs:
           )
           if [ -n "$NAME" ]; then args+=(--name "$NAME"); fi
           if [ -n "$BUDGET" ]; then args+=(--budget "$BUDGET"); fi
+          echo "Checking tournament script..."
+          python -m py_compile scripts/start_tournament.py
           python scripts/start_tournament.py "${args[@]}"
-
-      - name: Commit tournament files and archive
-        run: |
-          git config user.name "fantasy-live-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add data/project.json data/config.json site/data.json site/archive
-          git diff --cached --quiet || git commit -m "Start new fantasy tournament"
-          git push
-
-      - name: Start standings updater
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run update.yml --ref main
+          echo "Checking generated tournament files..."
+          python - <<'PY_CHECK'
+          import json, os, sys
+          from pathlib import Path
+          name = os.environ["NAME"].strip()
+          project = json.loads(Path("data/project.json").read_text(encoding="utf-8"))
+          config = json.loads(Path("data/config.json").read_text(encoding="utf-8"))
+          site = json.loads(Path("site/data.json").read_text(encoding="utf-8"))
+          actual = project.get("settings", {}).get("tournament_name", "")
+          print(f"Project tournament: {actual}")
+          print(f"Config title: {config.get('site_title')}")
+          print(f"Site tournament: {site.get('tournament')}")
