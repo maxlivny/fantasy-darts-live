@@ -119,10 +119,10 @@ jobs:
           EXPECTED_NAME: ${{ inputs.tournament_name }}
           EXPECTED_SLOTS: ${{ inputs.rating_slots }}
         run: |
-          python -c '
+          python - <<'PY_CHECK'
           import json, os, sys
           from pathlib import Path
+
           project = json.loads(Path("data/project.json").read_text(encoding="utf-8"))
           config = json.loads(Path("data/config.json").read_text(encoding="utf-8"))
           site = json.loads(Path("site/data.json").read_text(encoding="utf-8"))
-          name = project.get("settings", {}).get("tournament_name", "")
