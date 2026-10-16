@@ -126,3 +126,143 @@ def archive_current() -> str | None:
     site_data = read_json(SITE_DATA_PATH, {})
     if not site_data or not site_data.get("standings"):
         return None
+    project = read_json(PROJECT_PATH, {})
+    config = read_json(CONFIG_PATH, {})
+    tournament = site_data.get("tournament") or project.get("settings", {}).get("tournament_name") or config.get("site_title")
+    if not tournament:
+        return None
+
+    archive_id = slugify(str(tournament))
+    archive_dir = ARCHIVE_ROOT / archive_id
+    write_json(archive_dir / "project.json", project)
+    write_json(archive_dir / "data.json", site_data)
+    write_json(archive_dir / "config.json", config)
+
+    standings = site_data.get("standings", [])
+    index = read_json(ARCHIVE_INDEX, [])
+    if not isinstance(index, list):
+        index = []
+    item = {
+        "id": archive_id,
+        "title": f"Fantasy {tournament}" if not str(tournament).casefold().startswith("fantasy ") else str(tournament),
+        "winner": standings[0].get("name") if standings else None,
+        "participants": len(standings),
+        "matches": int(site_data.get("matches_count", 0)),
+        "archived_at": site_data.get("updated_at") or datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "data": f"archive/{archive_id}/data.json",
+    }
+    index = [x for x in index if x.get("id") != archive_id]
+    index.append(item)
+    write_json(ARCHIVE_INDEX, index)
+    return archive_id
+
+
+def parse_ints(text: str, expected: int, label: str) -> list[int]:
+    values = [int(x.strip()) for x in text.split(",") if x.strip()]
+    if len(values) != expected:
+        raise ValueError(f"{label}: ожидалось {expected} значений, получено {len(values)}")
+    return values
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--csv", required=True)
+    ap.add_argument("--name", default="")
+    ap.add_argument("--url", required=True)
+    ap.add_argument("--source", choices=["wikipedia", "dartconnect"], default="wikipedia")
+    ap.add_argument("--budget", type=float)
+    ap.add_argument("--start-stage", default="1/32")
+    ap.add_argument("--stage-scores", default="0,1,3,5,8,12,16")
+    ap.add_argument("--winning-legs", default="6,6,6,6,7,8")
+    ap.add_argument("--seeded", default="")
+    ap.add_argument("--seeded-start-round", type=int, default=2)
+    ap.add_argument("--first-round-matches", type=int, default=16)
+    ap.add_argument("--no-archive", action="store_true")
+    ap.add_argument("--rating-participants", default="")
+    ap.add_argument("--rating-slots", type=int, default=0)
+    args = ap.parse_args()
+
+    participants, meta = parse_fantasy_csv(Path(args.csv))
+    name = args.name.strip() or str(meta.get("tournament_name", "")).strip()
+    if not name:
+        raise ValueError("Не удалось определить название турнира. Укажи --name.")
+    budget = args.budget if args.budget is not None else meta.get("budget_limit")
+    if budget is None:
+        raise ValueError("Не удалось определить бюджет. Укажи --budget.")
+
+    scores_raw = [x.strip() for x in args.stage_scores.split(",") if x.strip()]
+    rounds = len(scores_raw) - 1
+    scores = parse_ints(args.stage_scores, rounds + 1, "stage_scores")
+    legs = parse_ints(args.winning_legs, rounds, "winning_legs")
+
+    players = sorted({player for p in participants for player in p["players"]})
+    seeded = [x.strip() for x in re.split(r"[\n|]+", args.seeded) if x.strip()]
+    unknown_seeds = [x for x in seeded if x not in players]
+    if unknown_seeds:
+        print("WARNING: сеяные отсутствуют в фэнтези-составах (это допустимо): " + ", ".join(unknown_seeds))
+    tournament_players = sorted(set(players) | set(seeded))
+
+    def norm(value: str) -> str:
+        return " ".join(unicodedata.normalize("NFKC", value).casefold().replace("ё", "е").split())
+
+    rating_participants = [x.strip() for x in args.rating_participants.splitlines() if x.strip()]
+    if args.rating_slots < 0 or len(rating_participants) != args.rating_slots:
+        raise ValueError(f"Рейтинговых мест: {args.rating_slots}, имён: {len(rating_participants)}")
+    if len({norm(x) for x in rating_participants}) != len(rating_participants):
+        raise ValueError("В рейтинговом списке есть повторяющиеся имена")
+    registered = {norm(p["name"]) for p in participants}
+    missing = [x for x in rating_participants if norm(x) not in registered]
+    if missing:
+        raise ValueError("Не собрали состав (замените резервистами): " + ", ".join(missing))
+
+    archived = None if args.no_archive else archive_current()
+    project = {
+        "participants": participants,
+        "player_scores": {p: (scores[args.seeded_start_round - 1] if p in seeded else 0) for p in tournament_players},
+        "manual_score_overrides": {},
+        "seeded_players": seeded,
+        "completed_matches": [],
+        "tournament_players": tournament_players,
+        "eliminated_players": [],
+        "manual_status_overrides": {},
+        "settings": {
+            "tournament_name": name,
+            "start_stage": args.start_stage,
+            "budget_limit": float(budget),
+            "roster_size": int(meta["roster_size"]),
+            "stage_scores": scores,
+            "seeded_start_round": args.seeded_start_round,
+            "winning_legs_by_round": {str(i): v for i, v in enumerate(legs, 1)},
+            "rating_participants": rating_participants,
+            "first_round_matches": args.first_round_matches,
+        },
+    }
+    write_json(PROJECT_PATH, project)
+
+    config = read_json(CONFIG_PATH, {})
+    config.update({
+        "site_title": f"Fantasy {name}" if not name.casefold().startswith("fantasy ") else name,
+        "result_source": args.source,
+        "tournament_url": args.url,
+        "source_label": "DartConnect" if args.source == "dartconnect" else "Wikipedia",
+        "refresh_seconds": int(config.get("refresh_seconds", 60)),
+    })
+    write_json(CONFIG_PATH, config)
+    write_json(SITE_DATA_PATH, {
+        "tournament": name,
+        "site_title": config["site_title"],
+        "updated_at": None,
+        "standings": [],
+        "matches": [],
+        "matches_count": 0,
+        "refresh_seconds": config["refresh_seconds"],
+        "source_url": args.url,
+        "source_label": config["source_label"],
+    })
+
+    print(f"OK: {name}")
+    print(f"Participants: {len(participants)}; roster: {meta['roster_size']}; players: {len(tournament_players)}")
+    print(f"Budget: {budget}; seeds: {len(seeded)}; archived: {archived or '-'}")
+
+if __name__ == "__main__":
+    main()
