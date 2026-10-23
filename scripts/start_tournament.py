@@ -249,7 +249,7 @@ def main() -> None:
     })
     write_json(CONFIG_PATH, config)
     write_json(SITE_DATA_PATH, {
-        "tournament": name,
+        "tournament": config["site_title"],
         "site_title": config["site_title"],
         "updated_at": None,
         "standings": [],
