@@ -120,7 +120,32 @@ jobs:
           EXPECTED_NAME: ${{ inputs.tournament_name }}
           EXPECTED_SLOTS: ${{ inputs.rating_slots }}
         run: |
-          python -c 'import json, os, pathlib, sys; p=json.loads(pathlib.Path("data/project.json").read_text(encoding="utf-8")); c=json.loads(pathlib.Path("data/config.json").read_text(encoding="utf-8")); s=json.loads(pathlib.Path("site/data.json").read_text(encoding="utf-8")); name=os.environ["EXPECTED_NAME"].strip(); actual=p["settings"]["tournament_name"]; print("Project:",actual,"Config:",c["site_title"],"Site:",s["tournament"],"Participants:",len(p["participants"])); assert (not name or actual==name) and s["tournament"]==actual and c["site_title"]=="Fantasy "+actual and (not os.environ["EXPECTED_SLOTS"].strip() or len(p["participants"])==int(os.environ["EXPECTED_SLOTS"])), "Tournament verification failed"'
+          python - <<'PYVERIFY'
+          import json
+          import os
+          from pathlib import Path
+
+          project = json.loads(Path("data/project.json").read_text(encoding="utf-8"))
+          config = json.loads(Path("data/config.json").read_text(encoding="utf-8"))
+          site = json.loads(Path("site/data.json").read_text(encoding="utf-8"))
+          expected_name = os.environ["EXPECTED_NAME"].strip()
+          actual_name = project["settings"]["tournament_name"]
+          rating_names = project["settings"].get("rating_participants", [])
+          expected_slots = os.environ["EXPECTED_SLOTS"].strip()
+
+          def canonical(name):
+              name = name.strip()
+              return name[8:].strip() if name.casefold().startswith("fantasy ") else name
+
+          print("Project:", actual_name, "Config:", config["site_title"],
+                "Site:", site["tournament"], "Participants:", len(project["participants"]),
+                "Rating places:", len(rating_names))
+          assert not expected_name or canonical(actual_name) == canonical(expected_name), "Tournament name mismatch"
+          assert canonical(site["tournament"]) == canonical(actual_name), "Site tournament mismatch"
+          assert canonical(config["site_title"]) == canonical(actual_name), "Config tournament mismatch"
+          assert not expected_slots or len(rating_names) == int(expected_slots), "Rating slots mismatch"
+          print("Tournament verification passed")
+          PYVERIFY
           git status --short
 
       - name: Commit tournament files and archive
