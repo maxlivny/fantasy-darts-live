@@ -109,8 +109,8 @@ def parse_fantasy_csv(path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]
         raise ValueError("CSV: не удалось найти пары строк «состав + цены».")
 
     roster_sizes = {len(p["players"]) for p in participants}
-    if not roster_sizes.issubset({7, 8, 10, 11}):
-        raise ValueError(f"CSV: допустимы составы из 7, 8, 10 или 11 игроков: {sorted(roster_sizes)}")
+    if not roster_sizes.issubset({7, 8, 10, 11, 15, 16}):
+        raise ValueError(f"CSV: допустимы составы из 7, 8, 10, 11, 15 или 16 игроков: {sorted(roster_sizes)}")
     meta["roster_size"] = max(roster_sizes)
     return participants, meta
 
