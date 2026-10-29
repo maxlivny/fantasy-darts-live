@@ -1,11 +1,11 @@
 {
   "tournament": "Players Championship 32",
-  "updated_at": "2026-10-29T14:46:09.117943+00:00",
+  "updated_at": "2026-10-29T14:51:07.924749+00:00",
   "standings": [
     {
       "name": "Олег Шляпин",
       "points": 24,
-      "alive": 10,
+      "alive": 9,
       "cost": 184.7,
       "rating": false,
       "players": [
@@ -33,8 +33,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -127,7 +127,7 @@
     {
       "name": "Сергей Шорин",
       "points": 24,
-      "alive": 11,
+      "alive": 10,
       "cost": 184.7,
       "rating": false,
       "players": [
@@ -155,8 +155,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -249,7 +249,7 @@
     {
       "name": "Дмитрий Тулаев",
       "points": 23,
-      "alive": 10,
+      "alive": 9,
       "cost": 177.9,
       "rating": false,
       "players": [
@@ -277,8 +277,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -371,7 +371,7 @@
     {
       "name": "Ярослав Кирюшкин",
       "points": 22,
-      "alive": 11,
+      "alive": 10,
       "cost": 181.9,
       "rating": false,
       "players": [
@@ -399,8 +399,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -493,7 +493,7 @@
     {
       "name": "Юрий Вязовский",
       "points": 22,
-      "alive": 10,
+      "alive": 9,
       "cost": 184.5,
       "rating": false,
       "players": [
@@ -521,8 +521,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -981,7 +981,7 @@
     {
       "name": "Григорий Адамов",
       "points": 21,
-      "alive": 8,
+      "alive": 7,
       "cost": 184.9,
       "rating": false,
       "players": [
@@ -1016,8 +1016,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -1833,9 +1833,131 @@
       "place": 15
     },
     {
-      "name": "Игорь Мошков",
+      "name": "Александр Вьюгин",
       "points": 20,
       "alive": 9,
+      "cost": 184.7,
+      "rating": false,
+      "players": [
+        {
+          "name": "Wessel Nijman",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 27.7
+        },
+        {
+          "name": "Chris Dobey",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 26.5
+        },
+        {
+          "name": "Kevin Doets",
+          "points": 1,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 25.0
+        },
+        {
+          "name": "Damon Heta",
+          "points": 1,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 22.5
+        },
+        {
+          "name": "Cameron Menzies",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 16.5
+        },
+        {
+          "name": "Krzysztof Ratajski",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 14.5
+        },
+        {
+          "name": "Beau Greaves",
+          "points": 1,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 13.7
+        },
+        {
+          "name": "Karel Sedlacek",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 12.3
+        },
+        {
+          "name": "Peter Wright",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 5.5
+        },
+        {
+          "name": "Adam Lipscombe",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.9
+        },
+        {
+          "name": "Darryl Pilgrim",
+          "points": 1,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.8
+        },
+        {
+          "name": "Stephen Burton",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 3.5
+        },
+        {
+          "name": "Martijn Dragt",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 3.3
+        },
+        {
+          "name": "David Sharp",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 2.1
+        },
+        {
+          "name": "Benjamin Pratnemer",
+          "points": 2,
+          "status": "В ИГРЕ",
+          "alive": true,
+          "price": 2.0
+        },
+        {
+          "name": "Adam Paxton",
+          "points": 0,
+          "status": "ВЫБЫЛ",
+          "alive": false,
+          "price": 1.9
+        }
+      ],
+      "place": 16
+    },
+    {
+      "name": "Игорь Мошков",
+      "points": 20,
+      "alive": 8,
       "cost": 184.7,
       "rating": false,
       "players": [
@@ -1870,8 +1992,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -1952,12 +2074,12 @@
           "price": 1.5
         }
       ],
-      "place": 16
+      "place": 17
     },
     {
       "name": "Oleg Corcevoi",
       "points": 19,
-      "alive": 8,
+      "alive": 7,
       "cost": 177.8,
       "rating": false,
       "players": [
@@ -1992,8 +2114,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -2074,7 +2196,7 @@
           "price": 2.3
         }
       ],
-      "place": 17
+      "place": 18
     },
     {
       "name": "Владимир Еременко",
@@ -2196,12 +2318,12 @@
           "price": 5.7
         }
       ],
-      "place": 18
+      "place": 19
     },
     {
       "name": "Тимур Исмаилов",
       "points": 19,
-      "alive": 8,
+      "alive": 7,
       "cost": 180.4,
       "rating": false,
       "players": [
@@ -2222,8 +2344,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -2318,12 +2440,12 @@
           "price": 2.1
         }
       ],
-      "place": 19
+      "place": 20
     },
     {
       "name": "Виталий Дубровский",
       "points": 19,
-      "alive": 7,
+      "alive": 6,
       "cost": 183.3,
       "rating": false,
       "players": [
@@ -2344,8 +2466,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -2438,128 +2560,6 @@
           "status": "ВЫБЫЛ",
           "alive": false,
           "price": 6.6
-        }
-      ],
-      "place": 20
-    },
-    {
-      "name": "Александр Вьюгин",
-      "points": 19,
-      "alive": 9,
-      "cost": 184.7,
-      "rating": false,
-      "players": [
-        {
-          "name": "Wessel Nijman",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 27.7
-        },
-        {
-          "name": "Chris Dobey",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 26.5
-        },
-        {
-          "name": "Kevin Doets",
-          "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 25.0
-        },
-        {
-          "name": "Damon Heta",
-          "points": 1,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 22.5
-        },
-        {
-          "name": "Cameron Menzies",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 16.5
-        },
-        {
-          "name": "Krzysztof Ratajski",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 14.5
-        },
-        {
-          "name": "Beau Greaves",
-          "points": 1,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 13.7
-        },
-        {
-          "name": "Karel Sedlacek",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 12.3
-        },
-        {
-          "name": "Peter Wright",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 5.5
-        },
-        {
-          "name": "Adam Lipscombe",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.9
-        },
-        {
-          "name": "Darryl Pilgrim",
-          "points": 1,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.8
-        },
-        {
-          "name": "Stephen Burton",
-          "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 3.5
-        },
-        {
-          "name": "Martijn Dragt",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 3.3
-        },
-        {
-          "name": "David Sharp",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 2.1
-        },
-        {
-          "name": "Benjamin Pratnemer",
-          "points": 2,
-          "status": "В ИГРЕ",
-          "alive": true,
-          "price": 2.0
-        },
-        {
-          "name": "Adam Paxton",
-          "points": 0,
-          "status": "ВЫБЫЛ",
-          "alive": false,
-          "price": 1.9
         }
       ],
       "place": 21
@@ -2811,7 +2811,7 @@
     {
       "name": "Макс Мацюсь",
       "points": 18,
-      "alive": 7,
+      "alive": 6,
       "cost": 162.0,
       "rating": false,
       "players": [
@@ -2839,8 +2839,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3177,7 +3177,7 @@
     {
       "name": "Валерий Соболевский",
       "points": 18,
-      "alive": 6,
+      "alive": 5,
       "cost": 182.9,
       "rating": false,
       "players": [
@@ -3205,8 +3205,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3299,7 +3299,7 @@
     {
       "name": "Mikhail Dudoladov",
       "points": 18,
-      "alive": 8,
+      "alive": 7,
       "cost": 183.8,
       "rating": false,
       "players": [
@@ -3334,8 +3334,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3421,7 +3421,7 @@
     {
       "name": "Сергей Пешков",
       "points": 18,
-      "alive": 9,
+      "alive": 8,
       "cost": 184.4,
       "rating": false,
       "players": [
@@ -3456,8 +3456,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3543,7 +3543,7 @@
     {
       "name": "Максим Алдошин",
       "points": 18,
-      "alive": 8,
+      "alive": 7,
       "cost": 184.6,
       "rating": false,
       "players": [
@@ -3571,8 +3571,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3665,7 +3665,7 @@
     {
       "name": "Bruce Wayne",
       "points": 18,
-      "alive": 7,
+      "alive": 6,
       "cost": 185.0,
       "rating": false,
       "players": [
@@ -3700,8 +3700,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -3787,7 +3787,7 @@
     {
       "name": "Евгений Шестаков",
       "points": 18,
-      "alive": 6,
+      "alive": 5,
       "cost": 185.0,
       "rating": false,
       "players": [
@@ -3822,8 +3822,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -4641,7 +4641,7 @@
     {
       "name": "Степан Удалов",
       "points": 17,
-      "alive": 9,
+      "alive": 8,
       "cost": 183.6,
       "rating": false,
       "players": [
@@ -4683,8 +4683,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -4763,7 +4763,7 @@
     {
       "name": "Александр Громов",
       "points": 17,
-      "alive": 8,
+      "alive": 7,
       "cost": 183.8,
       "rating": false,
       "players": [
@@ -4805,8 +4805,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -4885,7 +4885,7 @@
     {
       "name": "Андрей Асямолов",
       "points": 17,
-      "alive": 8,
+      "alive": 7,
       "cost": 184.0,
       "rating": false,
       "players": [
@@ -4920,8 +4920,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -5251,7 +5251,7 @@
     {
       "name": "Александр Матвиенко",
       "points": 17,
-      "alive": 7,
+      "alive": 6,
       "cost": 184.9,
       "rating": false,
       "players": [
@@ -5279,8 +5279,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -5373,7 +5373,7 @@
     {
       "name": "Андрей Малышев",
       "points": 17,
-      "alive": 8,
+      "alive": 7,
       "cost": 184.9,
       "rating": false,
       "players": [
@@ -5408,8 +5408,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -5739,7 +5739,7 @@
     {
       "name": "Костя Виноградов",
       "points": 16,
-      "alive": 6,
+      "alive": 5,
       "cost": 183.7,
       "rating": false,
       "players": [
@@ -5774,8 +5774,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -5861,7 +5861,7 @@
     {
       "name": "Юрий Поршнев",
       "points": 16,
-      "alive": 7,
+      "alive": 6,
       "cost": 184.1,
       "rating": false,
       "players": [
@@ -5889,8 +5889,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -6227,7 +6227,7 @@
     {
       "name": "Игорь Онешко",
       "points": 15,
-      "alive": 6,
+      "alive": 5,
       "cost": 156.6,
       "rating": false,
       "players": [
@@ -6255,8 +6255,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -6715,7 +6715,7 @@
     {
       "name": "Алексей Букреев",
       "points": 15,
-      "alive": 6,
+      "alive": 5,
       "cost": 184.6,
       "rating": false,
       "players": [
@@ -6743,8 +6743,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -6959,7 +6959,7 @@
     {
       "name": "Сергей Лубков",
       "points": 14,
-      "alive": 6,
+      "alive": 5,
       "cost": 168.9,
       "rating": false,
       "players": [
@@ -6987,8 +6987,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -7447,7 +7447,7 @@
     {
       "name": "Владислав Конев",
       "points": 14,
-      "alive": 6,
+      "alive": 5,
       "cost": 184.4,
       "rating": false,
       "players": [
@@ -7475,8 +7475,8 @@
         {
           "name": "Dirk van Duijvenbode",
           "points": 1,
-          "status": "В ИГРЕ",
-          "alive": true,
+          "status": "ВЫБЫЛ",
+          "alive": false,
           "price": 15.0
         },
         {
@@ -8007,7 +8007,7 @@
       "round": 1
     }
   ],
-  "matches_count": 94,
+  "matches_count": 95,
   "site_title": "Fantasy Players Championship 32",
   "refresh_seconds": 60,
   "source_url": "https://tv.dartconnect.com/event/pdcpc26e32/matches",
