@@ -177,7 +177,6 @@ def main() -> None:
     ap.add_argument("--seeded", default="")
     ap.add_argument("--seeded-start-round", type=int, default=2)
     ap.add_argument("--first-round-matches", type=int, default=16)
-    ap.add_argument("--format", choices=["knockout", "grand_slam"], default="knockout")
     ap.add_argument("--no-archive", action="store_true")
     ap.add_argument("--rating-participants", default="")
     ap.add_argument("--rating-slots", type=int, default=0)
@@ -191,33 +190,10 @@ def main() -> None:
     if budget is None:
         raise ValueError("Не удалось определить бюджет. Укажи --budget.")
 
-    # The existing Cloudflare admin may not expose tournament_format.
-    # Detect Grand Slam from its Wikipedia URL/name without changing the admin.
-    grand_slam_url = bool(re.search(r"(?:^|[/_\s-])grand[_\s-]*slam(?:[_\s-]|$)", args.url, re.I))
-    grand_slam_name = bool(re.search(r"\bgrand\s+slam\b", name, re.I))
-    if args.format == "knockout" and (grand_slam_url or grand_slam_name):
-        args.format = "grand_slam"
-        print("Grand Slam detected automatically from tournament name/URL")
-    if args.format == "grand_slam":
-        # The admin sends normal tournament defaults unless the user edits them.
-        if args.stage_scores == "0,1,3,5,8,12,16":
-            args.stage_scores = "0,1,3,6,10,14,18"
-        if args.winning_legs == "6,6,6,6,7,8":
-            args.winning_legs = "5,10,16,16,16,16"
-        if args.start_stage == "1/32":
-            args.start_stage = "Группы"
-        if args.seeded:
-            raise ValueError("Grand Slam: seeded players must be empty (groups have no fantasy byes)")
-
     scores_raw = [x.strip() for x in args.stage_scores.split(",") if x.strip()]
     rounds = len(scores_raw) - 1
     scores = parse_ints(args.stage_scores, rounds + 1, "stage_scores")
     legs = parse_ints(args.winning_legs, rounds, "winning_legs")
-    if args.format == "grand_slam":
-        if scores != [0, 1, 3, 6, 10, 14, 18] or legs != [5, 10, 16, 16, 16, 16]:
-            raise ValueError("Grand Slam: очки 0,1,3,6,10,14,18; леги 5,10,16,16,16,16")
-        if args.source != "wikipedia":
-            raise ValueError("Grand Slam: источник должен быть Wikipedia")
 
     players = sorted({player for p in participants for player in p["players"]})
     seeded = [x.strip() for x in re.split(r"[\n|]+", args.seeded) if x.strip()]
@@ -229,7 +205,7 @@ def main() -> None:
     def norm(value: str) -> str:
         return " ".join(unicodedata.normalize("NFKC", value).casefold().replace("ё", "е").split())
 
-    rating_participants = [x.strip() for x in args.rating_participants.splitlines() if x.strip()]
+    rating_participants = [x.strip() for x in re.split(r"[\n|]+", args.rating_participants) if x.strip()]
     if args.rating_slots < 0 or len(rating_participants) != args.rating_slots:
         raise ValueError(f"Рейтинговых мест: {args.rating_slots}, имён: {len(rating_participants)}")
     if len({norm(x) for x in rating_participants}) != len(rating_participants):
@@ -238,12 +214,6 @@ def main() -> None:
     missing = [x for x in rating_participants if norm(x) not in registered]
     if missing:
         raise ValueError("Не собрали состав (замените резервистами): " + ", ".join(missing))
-
-    previous = read_json(PROJECT_PATH, {})
-    previous_settings = previous.get("settings", {})
-    previous_name = str(previous_settings.get("tournament_name", "")).strip()
-    if previous_name and norm(previous_name).removeprefix("fantasy ") == norm(name).removeprefix("fantasy "):
-        raise ValueError("Этот турнир уже запущен. Повторный запуск перезапишет текущие данные; остановлено.")
 
     archived = None if args.no_archive else archive_current()
     project = {
@@ -257,7 +227,6 @@ def main() -> None:
         "manual_status_overrides": {},
         "settings": {
             "tournament_name": name,
-            "tournament_format": args.format,
             "start_stage": args.start_stage,
             "budget_limit": float(budget),
             "roster_size": int(meta["roster_size"]),
@@ -279,34 +248,11 @@ def main() -> None:
         "refresh_seconds": int(config.get("refresh_seconds", 60)),
     })
     write_json(CONFIG_PATH, config)
-    # Publish a complete initial table even before the first Wikipedia refresh.
-    # The updater will replace zeroes with actual results on its first successful run.
-    rating_set = {norm(x) for x in rating_participants}
-    initial_standings = []
-    for participant in participants:
-        prices = participant.get("prices", [])
-        roster = participant.get("players", [])
-        initial_standings.append({
-            "name": participant["name"],
-            "points": 0,
-            "alive": len(roster),
-            "cost": round(sum(float(x) for x in prices), 2),
-            "rating": norm(participant["name"]) in rating_set,
-            "players": [
-                {"name": player, "points": 0, "status": "В ИГРЕ", "alive": True,
-                 "price": float(prices[i]) if i < len(prices) else 0}
-                for i, player in enumerate(roster)
-            ],
-        })
-    initial_standings.sort(key=lambda x: (x["cost"], norm(x["name"])))
-    for position, entry in enumerate(initial_standings, 1):
-        entry["place"] = position
-
     write_json(SITE_DATA_PATH, {
         "tournament": config["site_title"],
         "site_title": config["site_title"],
         "updated_at": None,
-        "standings": initial_standings,
+        "standings": [],
         "matches": [],
         "matches_count": 0,
         "refresh_seconds": config["refresh_seconds"],
