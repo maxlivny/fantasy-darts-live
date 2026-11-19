@@ -1159,6 +1159,141 @@ def fetch_dartconnect_matches(
     return matches
 
 
+def fetch_grand_slam(url: str, players: dict[str, str]) -> dict[str, Any]:
+    """Read official positions in 16 Wikipedia group tables and knockout bracket.
+
+    A group is finalized only when every player has played twice. This avoids
+    awarding provisional fantasy points from standings that may change.
+    """
+    title = wikipedia_page_title(url)
+    response = requests.get(
+        "https://en.wikipedia.org/w/api.php",
+        params={"action": "parse", "page": title, "prop": "text|wikitext",
+                "format": "json", "formatversion": "2", "redirects": "1"},
+        headers={"User-Agent": "FantasyDartsLive/3.0 (fantasy standings updater)"},
+        timeout=35,
+    )
+    response.raise_for_status()
+    payload = response.json().get("parse", {})
+    soup = BeautifulSoup(payload.get("text", ""), "html.parser")
+    groups: dict[str, dict[str, int]] = {}
+    # Expand the name dictionary with ALL real group players, not only fantasy picks.
+    all_players = dict(players)
+    for heading in soup.find_all(["h4", "h3"]):
+        label = heading.get_text(" ", strip=True)
+        match = re.search(r"\bGroup\s+([A-P])\b", label, re.I)
+        if not match:
+            continue
+        group_id = match.group(1).upper()
+        table = heading.find_next("table")
+        if table is None:
+            continue
+        header = table.find("tr")
+        if header is None or "Pos" not in header.get_text(" ", strip=True):
+            continue
+        standings = {}
+        played = []
+        for tr in table.find_all("tr"):
+            cells = tr.find_all(["td", "th"], recursive=False)
+            if len(cells) < 4:
+                continue
+            position = re.search(r"\b([123])\b", cells[0].get_text(" ", strip=True))
+            if not position:
+                continue
+            name_cell = cells[1]
+            # Seeded suffix (1), country flags and footnotes must not enter name.
+            raw_name = name_cell.get_text(" ", strip=True)
+            link = name_cell.find("a", href=re.compile(r"^/wiki/"))
+            if link and link.get_text(" ", strip=True):
+                raw_name = link.get_text(" ", strip=True)
+            else:
+                raw_name = re.sub(r"\s*\(\d+\)\s*$", "", raw_name).strip()
+            name = resolve_player(raw_name, all_players) or clean_name(raw_name)
+            if not name or len(name) < 3:
+                continue
+            all_players.setdefault(normalize_name(name), name)
+            played_match = re.search(r"\d+", cells[2].get_text(" ", strip=True))
+            played.append(int(played_match.group()) if played_match else 0)
+            standings[name] = int(position.group(1))
+        if len(standings) == 3 and len(played) == 3 and all(x == 2 for x in played):
+            groups[group_id] = standings
+    # До завершения первой группы публикация пустых результатов допустима.
+    # После начала плей-офф требуется полная картина всех 16 групп.
+    if len(groups) > 16 or any(set(v.values()) != {1, 2, 3} for v in groups.values()):
+        raise RuntimeError("Grand Slam: неверные места игроков в таблицах групп")
+
+    # Standard Wikipedia bracket RD1..RD4 is parsed separately from group results.
+    # Do not use generic schedule parser: its round numbering is knockout-only.
+    wiki = payload.get("wikitext", "")
+    knockout = parse_bracket_wikitext(wiki, all_players,
+        {1: 10, 2: 16, 3: 16, 4: 16}, 4)
+    # Some bracket templates use an embedded alternative notation. Fail closed
+    # rather than silently reporting wrong knockout points after play begins.
+    bracket_detected = bool(re.search(
+        r"(?im)^\s*\|\s*RD1-(?:team|score)\s*0*\d+\s*=", wiki))
+    if not bracket_detected:
+        raise RuntimeError("Grand Slam: формат сетки плей-офф Wikipedia ещё не подтверждён; обновление остановлено во избежание неверных очков")
+    if knockout and len(groups) != 16:
+        raise RuntimeError(f"Grand Slam: плей-офф начался, но распознано только {len(groups)}/16 групп")
+    return {"groups": groups, "knockout": knockout, "bracket_detected": bracket_detected}
+
+
+def calculate_grand_slam(project: dict[str, Any], parsed: dict[str, Any]) -> dict[str, Any]:
+    groups = parsed["groups"]
+    matches = parsed["knockout"]
+    positions = {name: place for group in groups.values() for name, place in group.items()}
+    canonical = {normalize_name(name): name for name in positions}
+    for match in matches:
+        for side in ("winner", "loser"):
+            mapped = canonical.get(normalize_name(match[side]))
+            if mapped is None:
+                raise RuntimeError(f"Grand Slam: unknown knockout player: {match[side]}")
+            match[side] = mapped
+    # Existing calculate() cannot be used because group losses are not elimination.
+    # Knockout rounds: 1/8=1, quarter=2, semi=3, final=4.
+    points = {name: {1: 3, 2: 1, 3: 0}[place] for name, place in positions.items()}
+    eliminated = {name for name, place in positions.items() if place != 1}
+    for match in matches:
+        winner, loser, round_no = match["winner"], match["loser"], int(match["round"])
+        if winner not in positions or positions[winner] != 1:
+            raise RuntimeError(f"Grand Slam: победитель плей-офф не выиграл группу: {winner}")
+        points[winner] = max(points.get(winner, 0), {1: 6, 2: 10, 3: 14, 4: 18}[round_no])
+        eliminated.add(loser)
+    # Плей-офф: проигравшие получают очки за достигнутую стадию,
+    # победители — за выход в следующий раунд.
+    overrides = project.get("manual_score_overrides", {})
+    normalized_points = {normalize_name(name): value for name, value in points.items()}
+    for name, value in overrides.items():
+        normalized_points[normalize_name(name)] = int(value)
+    normalized_eliminated = {normalize_name(name) for name in eliminated}
+    manual_status = {normalize_name(k): bool(v) for k, v in project.get("manual_status_overrides", {}).items()}
+    finished = any(int(m["round"]) == 4 for m in matches)
+    rating_names = {normalize_name(x) for x in project.get("settings", {}).get("rating_participants", [])}
+    standings = []
+    for participant in project.get("participants", []):
+        roster = participant.get("players", [])
+        prices = participant.get("prices", [])
+        rows = []
+        for index, name in enumerate(roster):
+            alive = not (finished or normalize_name(name) in normalized_eliminated or manual_status.get(normalize_name(name), False))
+            rows.append({"name": name, "points": normalized_points.get(normalize_name(name), 0),
+                         "status": "В ИГРЕ" if alive else "ВЫБЫЛ", "alive": alive,
+                         "price": float(prices[index]) if index < len(prices) else 0})
+        standings.append({"name": participant.get("name", ""),
+                          "points": sum(row["points"] for row in rows),
+                          "alive": sum(row["alive"] for row in rows),
+                          "cost": round(sum(float(x) for x in prices), 2),
+                          "rating": normalize_name(participant.get("name", "")) in rating_names,
+                          "players": rows})
+    standings.sort(key=lambda x: (-x["points"], x["cost"], normalize_name(x["name"])))
+    for i, entry in enumerate(standings, 1):
+        entry["place"] = i
+    return {"tournament": project.get("settings", {}).get("tournament_name", "Fantasy Darts"),
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "standings": standings, "matches": list(reversed(matches[-12:])),
+            "matches_count": len(matches), "groups_completed": len(groups)}
+
+
 def fetch_matches(
     config: dict[str, Any],
     players: dict[str, str],
@@ -1421,7 +1556,13 @@ def main() -> int:
     else:
         rounds_count = len(winning_legs_by_round)
 
-    matches = (
+    is_grand_slam = project.get("settings", {}).get("tournament_format") == "grand_slam"
+    if is_grand_slam:
+        parsed = fetch_grand_slam(str(config.get("tournament_url", "")), players)
+        matches = parsed["knockout"]
+        output = calculate_grand_slam(project, parsed)
+    else:
+        matches = (
         fetch_matches(
             config,
             players,
@@ -1432,7 +1573,7 @@ def main() -> int:
         if players
         else []
     )
-    output = calculate(project, matches)
+        output = calculate(project, matches)
     output["site_title"] = config.get("site_title", output["tournament"])
     output["refresh_seconds"] = int(config.get("refresh_seconds", 60))
     output["source_url"] = config.get("tournament_url", "")
