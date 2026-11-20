@@ -1556,7 +1556,18 @@ def main() -> int:
     else:
         rounds_count = len(winning_legs_by_round)
 
-    is_grand_slam = project.get("settings", {}).get("tournament_format") == "grand_slam"
+    # Detect Grand Slam from the published tournament name or source URL too.
+    # Older start_tournament.py versions do not write tournament_format.
+    settings = project.get("settings", {})
+    tournament_identity = " ".join((
+        str(settings.get("tournament_name", "")),
+        str(config.get("tournament_url", "")),
+    )).casefold().replace("_", " ").replace("-", " ")
+    is_grand_slam = (
+        settings.get("tournament_format") == "grand_slam"
+        or "grand slam" in tournament_identity
+    )
+    print(f"Grand Slam mode: {is_grand_slam}")
     if is_grand_slam:
         parsed = fetch_grand_slam(str(config.get("tournament_url", "")), players)
         matches = parsed["knockout"]
