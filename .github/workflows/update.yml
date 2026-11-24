@@ -19,7 +19,7 @@ permissions:
 
 concurrency:
   group: fantasy-live
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -59,6 +59,19 @@ jobs:
         with:
           path: site
 
+      - name: Wait for artifact availability
+        run: sleep 30
+
       - name: Deploy GitHub Pages
+        continue-on-error: true
         uses: actions/deploy-pages@v4
         id: deployment
+
+      - name: Wait before retry
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Retry GitHub Pages deployment
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        id: deployment_retry
