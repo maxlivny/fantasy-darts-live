@@ -424,6 +424,76 @@ def parse_bracket_wikitext(
     return matches
 
 
+
+def parse_pcf_split_brackets(
+    wikitext: str,
+    players: dict[str, str],
+    winning_legs_by_round: dict[int, int],
+) -> list[dict[str, Any]]:
+    """PCF 64: four independent 16-player sections plus an 8-player finals bracket."""
+    headers = list(re.finditer(r"(?im)^\s*\{\{\s*(16|8)TeamBracket\b", wikitext))
+    if sum(h.group(1) == "16" for h in headers) != 4 or sum(h.group(1) == "8" for h in headers) != 1:
+        raise RuntimeError("PCF: expected four 16TeamBracket sections and one 8TeamBracket; refusing to overwrite results.")
+    # A line's empty score must never consume the next line's parameter.
+    field_re = re.compile(r"(?im)^[ \t]*\|[ \t]*RD(\d+)-(team|score)[ \t]*0*(\d+)[ \t]*=[ \t]*([^\r\n]*)$")
+    found = {}
+    for pos, head in enumerate(headers):
+        size = int(head.group(1))
+        end = headers[pos+1].start() if pos+1 < len(headers) else len(wikitext)
+        block = wikitext[head.end():end]
+        # The outer template closes at a standalone }} line; nested PDCFlag
+        # templates are inline. Keep all fields local to their own section.
+        close = re.search(r"(?m)^[ \t]*\}\}[ \t]*$", block)
+        if close:
+            block = block[:close.start()]
+        params = {(int(m[1]), m[2].lower(), int(m[3])): m[4].strip() for m in field_re.finditer(block)}
+        if not params:
+            raise RuntimeError("PCF: empty bracket section")
+        for local in range(1, 4 if size == 8 else 5):
+            rnd = local + (3 if size == 8 else 0)
+            for slot in range(1, size // (2 ** (local-1)) + 1, 2):
+                raw_teams = [params.get((local, 'team', n), '') for n in (slot, slot+1)]
+                raw_scores = [params.get((local, 'score', n), '') for n in (slot, slot+1)]
+                teams = [clean_wikitext_cell(t) for t in raw_teams]
+                if not all(teams):
+                    continue
+                # Exact canonical names, with accent/case normalization; include
+                # real opponents absent from every fantasy roster as well.
+                a, b = [players.get(normalize_name(t), t) for t in teams]
+                if normalize_name(a) == normalize_name(b):
+                    continue
+                scores = [clean_wikitext_cell(t) for t in raw_scores]
+                if all(re.fullmatch(r"\d{1,2}", v) for v in scores):
+                    s1, s2 = map(int, scores)
+                    required = winning_legs_by_round.get(rnd, (6,6,10,10,11,11)[rnd-1])
+                    if max(s1,s2) != required or min(s1,s2) >= required:
+                        continue
+                    # Preserve the existing anti-premature-score safeguard.
+                    if any(re.search(r"\bavg\s*=", t, re.I) for t in raw_teams) and not all(re.search(r"\bavg\s*=\s*\d+(?:[.,]\d+)?", t, re.I) for t in raw_teams):
+                        continue
+                    winner, loser = (a,b) if s1>s2 else (b,a)
+                    score = f"{max(s1,s2)}-{min(s1,s2)}"
+                elif sum(bool(WALKOVER_RE.search(v)) for v in scores) == 1:
+                    winner, loser = (a,b) if WALKOVER_RE.search(scores[0]) else (b,a)
+                    score = 'w/o'
+                else:
+                    continue
+                key = (rnd, *sorted((normalize_name(a), normalize_name(b))))
+                item = dict(winner=winner, loser=loser, score=score, round=rnd)
+                if key in found and found[key] != item:
+                    raise RuntimeError(f"PCF: conflicting duplicate match in round {rnd}: {a} / {b}")
+                found[key] = item
+    matches = sorted(found.values(), key=lambda m: m['round'])
+    occupied = set()
+    for m in matches:
+        for name in (m['winner'], m['loser']):
+            key = (m['round'], normalize_name(name))
+            if key in occupied:
+                raise RuntimeError(f"PCF: player appears twice in round {m['round']}: {name}")
+            occupied.add(key)
+    return matches
+
+
 def wikipedia_page_title(url: str) -> str:
     match = re.search(r"/wiki/([^?#]+)", str(url))
     if not match:
@@ -497,6 +567,12 @@ def fetch_wikipedia_matches(
     # Временная диагностика для Czech Darts Open 2026.
     # Она показывает фактический формат страницы в логе GitHub Actions.
     print_wikipedia_diagnostics(wikitext)
+
+    # PCF uses five separate templates whose local RD/slot numbers repeat.
+    if "players championship finals" in title.casefold().replace("_", " ") and first_round_matches == 32:
+        matches = parse_pcf_split_brackets(wikitext, players, winning_legs_by_round)
+        print(f"Wikipedia PCF split brackets: {len(matches)} completed matches.")
+        return matches
 
     matches = parse_schedule_wikitext(
         wikitext,
