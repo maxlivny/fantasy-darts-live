@@ -37,7 +37,25 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
 
+      - name: Detect results source
+        id: results_source
+        run: |
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          config = json.loads(Path("data/config.json").read_text(encoding="utf-8"))
+          source = str(config.get("result_source", "wikipedia")).strip().casefold()
+          if source not in {"wikipedia", "dartconnect"}:
+              raise ValueError(f"Unknown results source: {source}")
+          print(f"Results source: {source}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"source={source}\n")
+          PYTHON
+
       - name: Install Playwright Chromium
+        if: steps.results_source.outputs.source == 'dartconnect'
         run: python -m playwright install --with-deps chromium
 
       - name: Update tournament results
